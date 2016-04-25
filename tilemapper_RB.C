@@ -75,6 +75,23 @@ int dotilemapper ( TString filename, int xbin, int ybin )
 
   TF1 *flandau = new TF1("flandau","landau",0,500);
 
+  TF1 *okayfun = new TF1("okayfun","landau(0) + gaus(3)",0,500);
+  okayfun->SetParameter(0,4000);
+  okayfun->SetParameter(1,100);
+  okayfun->SetParameter(2,10);
+  okayfun->SetParameter(3,4000);
+  okayfun->SetParameter(4,100);
+  okayfun->SetParameter(5,10);
+
+  okayfun->SetParLimits(0,1e0,1e5);
+  okayfun->SetParLimits(1,0,500);
+  okayfun->SetParLimits(2,0,500);
+  okayfun->SetParLimits(3,1e0,1e5);
+  okayfun->SetParLimits(4,0,500);
+  okayfun->SetParLimits(5,0,500);
+
+
+
   TString drawstring;
   TString cutstring;
   TString hname;
@@ -93,15 +110,18 @@ int dotilemapper ( TString filename, int xbin, int ybin )
     cutstring += i+1;
     cutstring += ">6.0";
 
-    //    cutstring += " && TH1>50 && TH8>100";
+    // cutstring += " && TH1>50 && TH8>100";
 
     cout << i+1 << " Draw(" << drawstring << "," << cutstring << ")" << endl;
 
     c1->cd(ican++);
-    //    W->Draw(drawstring,cutstring);
-    //W->Fit("landau",drawstring,cutstring);
+    // W->Draw(drawstring,cutstring);
+    // W->Fit("landau",drawstring,cutstring);
     W->Fit("flandau",drawstring,cutstring);
-    float mean = flandau->GetParameter(1);
+    // W->Fit("okayfun",drawstring,cutstring);
+    // float mean = flandau->GetParameter(1);
+    float mean = flandau->GetMaximumX();
+    // float mean = okayfun->GetMaximumX();
     cout << "the mean is " << mean << endl;
     fout << mean << " ";
   }
