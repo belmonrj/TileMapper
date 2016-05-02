@@ -16,14 +16,23 @@ void mpv_plotter()
   float mpv8[20];
   float pos[20];
 
-  TH2F *th2f_mpv1 = new TH2F("th2f_mpv1","",5,-0.5,4.5,2,-0.5,1.5);
-  TH2F *th2f_mpv2 = new TH2F("th2f_mpv2","",5,-0.5,4.5,2,-0.5,1.5);
-  TH2F *th2f_mpv3 = new TH2F("th2f_mpv3","",5,-0.5,4.5,2,-0.5,1.5);
-  TH2F *th2f_mpv4 = new TH2F("th2f_mpv4","",5,-0.5,4.5,2,-0.5,1.5);
-  TH2F *th2f_mpv5 = new TH2F("th2f_mpv5","",5,-0.5,4.5,2,-0.5,1.5);
-  TH2F *th2f_mpv6 = new TH2F("th2f_mpv6","",5,-0.5,4.5,2,-0.5,1.5);
-  TH2F *th2f_mpv7 = new TH2F("th2f_mpv7","",5,-0.5,4.5,2,-0.5,1.5);
-  TH2F *th2f_mpv8 = new TH2F("th2f_mpv8","",5,-0.5,4.5,2,-0.5,1.5);
+  TH2F *th2f_inner_mpv1 = new TH2F("th2f_inner_mpv1","",5,-0.5,4.5,2,-0.5,1.5);
+  TH2F *th2f_inner_mpv2 = new TH2F("th2f_inner_mpv2","",5,-0.5,4.5,2,-0.5,1.5);
+  TH2F *th2f_inner_mpv3 = new TH2F("th2f_inner_mpv3","",5,-0.5,4.5,2,-0.5,1.5);
+  TH2F *th2f_inner_mpv4 = new TH2F("th2f_inner_mpv4","",5,-0.5,4.5,2,-0.5,1.5);
+  TH2F *th2f_inner_mpv5 = new TH2F("th2f_inner_mpv5","",5,-0.5,4.5,2,-0.5,1.5);
+  TH2F *th2f_inner_mpv6 = new TH2F("th2f_inner_mpv6","",5,-0.5,4.5,2,-0.5,1.5);
+  TH2F *th2f_inner_mpv7 = new TH2F("th2f_inner_mpv7","",5,-0.5,4.5,2,-0.5,1.5);
+  TH2F *th2f_inner_mpv8 = new TH2F("th2f_inner_mpv8","",5,-0.5,4.5,2,-0.5,1.5);
+
+  TH2F *th2f_outer_mpv1 = new TH2F("th2f_outer_mpv1","",5,-0.5,4.5,2,-0.5,1.5);
+  TH2F *th2f_outer_mpv2 = new TH2F("th2f_outer_mpv2","",5,-0.5,4.5,2,-0.5,1.5);
+  TH2F *th2f_outer_mpv3 = new TH2F("th2f_outer_mpv3","",5,-0.5,4.5,2,-0.5,1.5);
+  TH2F *th2f_outer_mpv4 = new TH2F("th2f_outer_mpv4","",5,-0.5,4.5,2,-0.5,1.5);
+  TH2F *th2f_outer_mpv5 = new TH2F("th2f_outer_mpv5","",5,-0.5,4.5,2,-0.5,1.5);
+  TH2F *th2f_outer_mpv6 = new TH2F("th2f_outer_mpv6","",5,-0.5,4.5,2,-0.5,1.5);
+  TH2F *th2f_outer_mpv7 = new TH2F("th2f_outer_mpv7","",5,-0.5,4.5,2,-0.5,1.5);
+  TH2F *th2f_outer_mpv8 = new TH2F("th2f_outer_mpv8","",5,-0.5,4.5,2,-0.5,1.5);
 
   for ( int i = 0; i < 20; ++i)
     {
@@ -40,15 +49,46 @@ void mpv_plotter()
       if ( mpv7[i] < 0 ) mpv7[i] = 0;
       if ( mpv8[i] < 0 ) mpv8[i] = 0;
 
-      th2f_mpv1->SetBinContent(xbin[i],ybin[i],mpv1[i]);
-      th2f_mpv2->SetBinContent(xbin[i],ybin[i],mpv2[i]);
-      th2f_mpv3->SetBinContent(xbin[i],ybin[i],mpv3[i]);
-      th2f_mpv4->SetBinContent(xbin[i],ybin[i],mpv4[i]);
-      th2f_mpv5->SetBinContent(xbin[i],ybin[i],mpv5[i]);
-      th2f_mpv6->SetBinContent(xbin[i],ybin[i],mpv6[i]);
-      th2f_mpv7->SetBinContent(xbin[i],ybin[i],mpv7[i]);
-      th2f_mpv8->SetBinContent(xbin[i],ybin[i],mpv8[i]);
+      if ( i < 10 )
+        {
+          th2f_outer_mpv1->SetBinContent(xbin[i]+1,ybin[i]+1,mpv1[i]);
+          th2f_outer_mpv2->SetBinContent(xbin[i]+1,ybin[i]+1,mpv2[i]);
+          th2f_outer_mpv3->SetBinContent(xbin[i]+1,ybin[i]+1,mpv3[i]);
+          th2f_outer_mpv4->SetBinContent(xbin[i]+1,ybin[i]+1,mpv4[i]);
+          th2f_outer_mpv5->SetBinContent(xbin[i]+1,ybin[i]+1,mpv5[i]);
+          th2f_outer_mpv6->SetBinContent(xbin[i]+1,ybin[i]+1,mpv6[i]);
+          th2f_outer_mpv7->SetBinContent(xbin[i]+1,ybin[i]+1,mpv7[i]);
+          th2f_outer_mpv8->SetBinContent(xbin[i]+1,ybin[i]+1,mpv8[i]);
+        }
+      if ( i > 9 )
+        {
+          th2f_inner_mpv1->SetBinContent(xbin[i]+1,ybin[i]+1,mpv1[i]);
+          th2f_inner_mpv2->SetBinContent(xbin[i]+1,ybin[i]+1,mpv2[i]);
+          th2f_inner_mpv3->SetBinContent(xbin[i]+1,ybin[i]+1,mpv3[i]);
+          th2f_inner_mpv4->SetBinContent(xbin[i]+1,ybin[i]+1,mpv4[i]);
+          th2f_inner_mpv5->SetBinContent(xbin[i]+1,ybin[i]+1,mpv5[i]);
+          th2f_inner_mpv6->SetBinContent(xbin[i]+1,ybin[i]+1,mpv6[i]);
+          th2f_inner_mpv7->SetBinContent(xbin[i]+1,ybin[i]+1,mpv7[i]);
+          th2f_inner_mpv8->SetBinContent(xbin[i]+1,ybin[i]+1,mpv8[i]);
+        }
 
+      cout << "xbin is " << xbin[i] << " and ybin is " << ybin[i] << " and mpv1 is " << mpv1[i] << endl;
+
+    }
+
+  for ( int i = 0; i < 5; ++i )
+    {
+      for ( int j = 0; j < 2; ++j )
+        {
+          cout << "for i = " << i << " and j = " << j
+               << " the bin content is "
+               << th2f_outer_mpv1->GetBinContent(i+1,j+1)
+               << " the xbin is "
+               << th2f_outer_mpv1->GetXaxis()->GetBinCenter(i+1)
+               << " the ybin is "
+               << th2f_outer_mpv1->GetXaxis()->GetBinCenter(j+1)
+               << endl;
+        }
     }
 
   TGraph *TG1 = new TGraph(20,pos,mpv1);
@@ -74,6 +114,24 @@ void mpv_plotter()
   TG4->SetMarkerStyle(kFullSquare);
   TG4->SetMarkerColor(kBlue);
 
+  double MINIMUM = 1.0;
+  double MAXIMUM = 260.0;
+
+  TG1->GetXaxis()->SetLimits(-0.5,20.5);
+  TG2->GetXaxis()->SetLimits(-0.5,20.5);
+  TG3->GetXaxis()->SetLimits(-0.5,20.5);
+  TG4->GetXaxis()->SetLimits(-0.5,20.5);
+
+  TG1->SetMinimum(MINIMUM);
+  TG2->SetMinimum(MINIMUM);
+  TG3->SetMinimum(MINIMUM);
+  TG4->SetMinimum(MINIMUM);
+
+  TG1->SetMaximum(MAXIMUM);
+  TG2->SetMaximum(MAXIMUM);
+  TG3->SetMaximum(MAXIMUM);
+  TG4->SetMaximum(MAXIMUM);
+
   c1->cd(1);
   TG1->Draw("ap");
   c1->cd(2);
@@ -83,7 +141,23 @@ void mpv_plotter()
   c1->cd(4);
   TG4->Draw("ap");
 
-  c1->Print("MPV_Plots_1_4.png");
+  c1->Print("figs/MPV_Plots_1_4.png");
+  c1->Print("figs/MPV_Plots_1_4.pdf");
+
+  TG5->GetXaxis()->SetLimits(-0.5,20.5);
+  TG6->GetXaxis()->SetLimits(-0.5,20.5);
+  TG7->GetXaxis()->SetLimits(-0.5,20.5);
+  TG8->GetXaxis()->SetLimits(-0.5,20.5);
+
+  TG5->SetMinimum(MINIMUM);
+  TG6->SetMinimum(MINIMUM);
+  TG7->SetMinimum(MINIMUM);
+  TG8->SetMinimum(MINIMUM);
+
+  TG5->SetMaximum(MAXIMUM);
+  TG6->SetMaximum(MAXIMUM);
+  TG7->SetMaximum(MAXIMUM);
+  TG8->SetMaximum(MAXIMUM);
 
   TG5->SetMarkerStyle(kFullCircle);
   TG5->SetMarkerColor(kRed);
@@ -103,36 +177,386 @@ void mpv_plotter()
   c1->cd(4);
   TG8->Draw("ap");
 
-  c1->Print("MPV_Plots_5_8.png");
+  c1->Print("figs/MPV_Plots_5_8.png");
+  c1->Print("figs/MPV_Plots_5_8.pdf");
 
   // ---
 
   c1->Clear();
   delete c1;
-  c1 = new TCanvas("c1","",800,600);
+  c1 = new TCanvas("c1","",1500,500);
+  //c1->SetLogz();
 
-  th2f_mpv1->Draw("colz");
-  c1->Print("map_2dbins_mpv1.png");
+  TLatex tex;
+  TLatex texnote;
+  th2f_outer_mpv1->Draw("colz");
+  th2f_outer_mpv1->SetMinimum(MINIMUM);
+  th2f_outer_mpv1->SetMaximum(MAXIMUM);
+  th2f_outer_mpv1->GetXaxis()->SetNdivisions(5,true);
+  th2f_outer_mpv1->GetYaxis()->SetNdivisions(2,true);
+  texnote.DrawLatex(-1.0,-0.1,"SiPM");
+  texnote.DrawLatex(-1.0,-0.2,"approx");
+  texnote.DrawLatex(-1.0,-0.3,"location");
+  for ( int i = 0; i < 5; ++i )
+    {
+      for ( int j = 0; j < 2; ++j )
+        {
+          double cont = th2f_outer_mpv1->GetBinContent(i+1,j+1);
+          double econt = th2f_outer_mpv1->GetBinError(i+1,j+1);
+          double x = th2f_outer_mpv1->GetXaxis()->GetBinCenter(i+1);
+          double y = th2f_outer_mpv1->GetXaxis()->GetBinCenter(j+1);
+          tex.DrawLatex(x-0.25,y,Form("%f",cont));
+          tex.DrawLatex(x-0.25,y-0.1,Form("#pm%f",econt));
+        }
+    }
+  c1->Print("figs/map_outer_2dbins_mpv1.png");
+  c1->Print("figs/map_outer_2dbins_mpv1.pdf");
 
-  th2f_mpv2->Draw("colz");
-  c1->Print("map_2dbins_mpv2.png");
+  th2f_outer_mpv2->Draw("colz");
+  th2f_outer_mpv2->SetMinimum(MINIMUM);
+  th2f_outer_mpv2->SetMaximum(MAXIMUM);
+  th2f_outer_mpv2->GetXaxis()->SetNdivisions(5,true);
+  th2f_outer_mpv2->GetYaxis()->SetNdivisions(2,true);
+  texnote.DrawLatex(-1.0,-0.1,"SiPM");
+  texnote.DrawLatex(-1.0,-0.2,"approx");
+  texnote.DrawLatex(-1.0,-0.3,"location");
+  for ( int i = 0; i < 5; ++i )
+    {
+      for ( int j = 0; j < 2; ++j )
+        {
+          double cont = th2f_outer_mpv2->GetBinContent(i+1,j+1);
+          double econt = th2f_outer_mpv2->GetBinError(i+1,j+1);
+          double x = th2f_outer_mpv1->GetXaxis()->GetBinCenter(i+1);
+          double y = th2f_outer_mpv1->GetXaxis()->GetBinCenter(j+1);
+          tex.DrawLatex(x-0.25,y,Form("%f",cont));
+          tex.DrawLatex(x-0.25,y-0.1,Form("#pm%f",econt));
+        }
+    }
+  c1->Print("figs/map_outer_2dbins_mpv2.png");
+  c1->Print("figs/map_outer_2dbins_mpv2.pdf");
 
-  th2f_mpv3->Draw("colz");
-  c1->Print("map_2dbins_mpv3.png");
+  th2f_outer_mpv3->Draw("colz");
+  th2f_outer_mpv3->SetMinimum(MINIMUM);
+  th2f_outer_mpv3->SetMaximum(MAXIMUM);
+  th2f_outer_mpv3->GetXaxis()->SetNdivisions(5,true);
+  th2f_outer_mpv3->GetYaxis()->SetNdivisions(2,true);
+  texnote.DrawLatex(-1.0,-0.1,"SiPM");
+  texnote.DrawLatex(-1.0,-0.2,"approx");
+  texnote.DrawLatex(-1.0,-0.3,"location");
+  for ( int i = 0; i < 5; ++i )
+    {
+      for ( int j = 0; j < 2; ++j )
+        {
+          double cont = th2f_outer_mpv3->GetBinContent(i+1,j+1);
+          double econt = th2f_outer_mpv3->GetBinError(i+1,j+1);
+          double x = th2f_outer_mpv1->GetXaxis()->GetBinCenter(i+1);
+          double y = th2f_outer_mpv1->GetXaxis()->GetBinCenter(j+1);
+          tex.DrawLatex(x-0.25,y,Form("%f",cont));
+          tex.DrawLatex(x-0.25,y-0.1,Form("#pm%f",econt));
+        }
+    }
+  c1->Print("figs/map_outer_2dbins_mpv3.png");
+  c1->Print("figs/map_outer_2dbins_mpv3.pdf");
 
-  th2f_mpv4->Draw("colz");
-  c1->Print("map_2dbins_mpv4.png");
+  th2f_outer_mpv4->Draw("colz");
+  th2f_outer_mpv4->SetMinimum(MINIMUM);
+  th2f_outer_mpv4->SetMaximum(MAXIMUM);
+  th2f_outer_mpv4->GetXaxis()->SetNdivisions(5,true);
+  th2f_outer_mpv4->GetYaxis()->SetNdivisions(2,true);
+  texnote.DrawLatex(-1.0,-0.1,"SiPM");
+  texnote.DrawLatex(-1.0,-0.2,"approx");
+  texnote.DrawLatex(-1.0,-0.3,"location");
+  for ( int i = 0; i < 5; ++i )
+    {
+      for ( int j = 0; j < 2; ++j )
+        {
+          double cont = th2f_outer_mpv4->GetBinContent(i+1,j+1);
+          double econt = th2f_outer_mpv4->GetBinError(i+1,j+1);
+          double x = th2f_outer_mpv1->GetXaxis()->GetBinCenter(i+1);
+          double y = th2f_outer_mpv1->GetXaxis()->GetBinCenter(j+1);
+          tex.DrawLatex(x-0.25,y,Form("%f",cont));
+          tex.DrawLatex(x-0.25,y-0.1,Form("#pm%f",econt));
+        }
+    }
+  c1->Print("figs/map_outer_2dbins_mpv4.png");
+  c1->Print("figs/map_outer_2dbins_mpv4.pdf");
 
-  th2f_mpv5->Draw("colz");
-  c1->Print("map_2dbins_mpv5.png");
+  th2f_outer_mpv5->Draw("colz");
+  th2f_outer_mpv5->SetMinimum(MINIMUM);
+  th2f_outer_mpv5->SetMaximum(MAXIMUM);
+  th2f_outer_mpv5->GetXaxis()->SetNdivisions(5,true);
+  th2f_outer_mpv5->GetYaxis()->SetNdivisions(2,true);
+  texnote.DrawLatex(-1.0,-0.1,"SiPM");
+  texnote.DrawLatex(-1.0,-0.2,"approx");
+  texnote.DrawLatex(-1.0,-0.3,"location");
+  for ( int i = 0; i < 5; ++i )
+    {
+      for ( int j = 0; j < 2; ++j )
+        {
+          double cont = th2f_outer_mpv5->GetBinContent(i+1,j+1);
+          double econt = th2f_outer_mpv5->GetBinError(i+1,j+1);
+          double x = th2f_outer_mpv1->GetXaxis()->GetBinCenter(i+1);
+          double y = th2f_outer_mpv1->GetXaxis()->GetBinCenter(j+1);
+          tex.DrawLatex(x-0.25,y,Form("%f",cont));
+          tex.DrawLatex(x-0.25,y-0.1,Form("#pm%f",econt));
+        }
+    }
+  c1->Print("figs/map_outer_2dbins_mpv5.png");
+  c1->Print("figs/map_outer_2dbins_mpv5.pdf");
 
-  th2f_mpv6->Draw("colz");
-  c1->Print("map_2dbins_mpv6.png");
+  th2f_outer_mpv6->Draw("colz");
+  th2f_outer_mpv6->SetMinimum(MINIMUM);
+  th2f_outer_mpv6->SetMaximum(MAXIMUM);
+  th2f_outer_mpv6->GetXaxis()->SetNdivisions(5,true);
+  th2f_outer_mpv6->GetYaxis()->SetNdivisions(2,true);
+  texnote.DrawLatex(-1.0,-0.1,"SiPM");
+  texnote.DrawLatex(-1.0,-0.2,"approx");
+  texnote.DrawLatex(-1.0,-0.3,"location");
+  for ( int i = 0; i < 5; ++i )
+    {
+      for ( int j = 0; j < 2; ++j )
+        {
+          double cont = th2f_outer_mpv6->GetBinContent(i+1,j+1);
+          double econt = th2f_outer_mpv6->GetBinError(i+1,j+1);
+          double x = th2f_outer_mpv1->GetXaxis()->GetBinCenter(i+1);
+          double y = th2f_outer_mpv1->GetXaxis()->GetBinCenter(j+1);
+          tex.DrawLatex(x-0.25,y,Form("%f",cont));
+          tex.DrawLatex(x-0.25,y-0.1,Form("#pm%f",econt));
+        }
+    }
+  c1->Print("figs/map_outer_2dbins_mpv6.png");
+  c1->Print("figs/map_outer_2dbins_mpv6.pdf");
 
-  th2f_mpv7->Draw("colz");
-  c1->Print("map_2dbins_mpv7.png");
+  th2f_outer_mpv7->Draw("colz");
+  th2f_outer_mpv7->SetMinimum(MINIMUM);
+  th2f_outer_mpv7->SetMaximum(MAXIMUM);
+  th2f_outer_mpv7->GetXaxis()->SetNdivisions(5,true);
+  th2f_outer_mpv7->GetYaxis()->SetNdivisions(2,true);
+  texnote.DrawLatex(-1.0,-0.1,"SiPM");
+  texnote.DrawLatex(-1.0,-0.2,"approx");
+  texnote.DrawLatex(-1.0,-0.3,"location");
+  for ( int i = 0; i < 5; ++i )
+    {
+      for ( int j = 0; j < 2; ++j )
+        {
+          double cont = th2f_outer_mpv7->GetBinContent(i+1,j+1);
+          double econt = th2f_outer_mpv7->GetBinError(i+1,j+1);
+          double x = th2f_outer_mpv1->GetXaxis()->GetBinCenter(i+1);
+          double y = th2f_outer_mpv1->GetXaxis()->GetBinCenter(j+1);
+          tex.DrawLatex(x-0.25,y,Form("%f",cont));
+          tex.DrawLatex(x-0.25,y-0.1,Form("#pm%f",econt));
+        }
+    }
+  c1->Print("figs/map_outer_2dbins_mpv7.png");
+  c1->Print("figs/map_outer_2dbins_mpv7.pdf");
 
-  th2f_mpv8->Draw("colz");
-  c1->Print("map_2dbins_mpv8.png");
+  th2f_outer_mpv8->Draw("colz");
+  th2f_outer_mpv8->SetMinimum(MINIMUM);
+  th2f_outer_mpv8->SetMaximum(MAXIMUM);
+  th2f_outer_mpv8->GetXaxis()->SetNdivisions(5,true);
+  th2f_outer_mpv8->GetYaxis()->SetNdivisions(2,true);
+  texnote.DrawLatex(-1.0,-0.1,"SiPM");
+  texnote.DrawLatex(-1.0,-0.2,"approx");
+  texnote.DrawLatex(-1.0,-0.3,"location");
+  for ( int i = 0; i < 5; ++i )
+    {
+      for ( int j = 0; j < 2; ++j )
+        {
+          double cont = th2f_outer_mpv8->GetBinContent(i+1,j+1);
+          double econt = th2f_outer_mpv8->GetBinError(i+1,j+1);
+          double x = th2f_outer_mpv1->GetXaxis()->GetBinCenter(i+1);
+          double y = th2f_outer_mpv1->GetXaxis()->GetBinCenter(j+1);
+          tex.DrawLatex(x-0.25,y,Form("%f",cont));
+          tex.DrawLatex(x-0.25,y-0.1,Form("#pm%f",econt));
+        }
+    }
+  c1->Print("figs/map_outer_2dbins_mpv8.png");
+  c1->Print("figs/map_outer_2dbins_mpv8.pdf");
+
+  // ---
+
+  th2f_inner_mpv1->Draw("colz");
+  th2f_inner_mpv1->SetMinimum(MINIMUM);
+  th2f_inner_mpv1->SetMaximum(MAXIMUM);
+  th2f_inner_mpv1->GetXaxis()->SetNdivisions(5,true);
+  th2f_inner_mpv1->GetYaxis()->SetNdivisions(2,true);
+  texnote.DrawLatex(-1.0,-0.1,"SiPM");
+  texnote.DrawLatex(-1.0,-0.2,"approx");
+  texnote.DrawLatex(-1.0,-0.3,"location");
+  for ( int i = 0; i < 5; ++i )
+    {
+      for ( int j = 0; j < 2; ++j )
+        {
+          double cont = th2f_inner_mpv1->GetBinContent(i+1,j+1);
+          double econt = th2f_inner_mpv1->GetBinError(i+1,j+1);
+          double x = th2f_inner_mpv1->GetXaxis()->GetBinCenter(i+1);
+          double y = th2f_inner_mpv1->GetXaxis()->GetBinCenter(j+1);
+          tex.DrawLatex(x-0.25,y,Form("%f",cont));
+          tex.DrawLatex(x-0.25,y-0.1,Form("#pm%f",econt));
+        }
+    }
+  c1->Print("figs/map_inner_2dbins_mpv1.png");
+  c1->Print("figs/map_inner_2dbins_mpv1.pdf");
+
+  th2f_inner_mpv2->Draw("colz");
+  th2f_inner_mpv2->SetMinimum(MINIMUM);
+  th2f_inner_mpv2->SetMaximum(MAXIMUM);
+  th2f_inner_mpv2->GetXaxis()->SetNdivisions(5,true);
+  th2f_inner_mpv2->GetYaxis()->SetNdivisions(2,true);
+  texnote.DrawLatex(-1.0,-0.1,"SiPM");
+  texnote.DrawLatex(-1.0,-0.2,"approx");
+  texnote.DrawLatex(-1.0,-0.3,"location");
+  for ( int i = 0; i < 5; ++i )
+    {
+      for ( int j = 0; j < 2; ++j )
+        {
+          double cont = th2f_inner_mpv2->GetBinContent(i+1,j+1);
+          double econt = th2f_inner_mpv2->GetBinError(i+1,j+1);
+          double x = th2f_inner_mpv1->GetXaxis()->GetBinCenter(i+1);
+          double y = th2f_inner_mpv1->GetXaxis()->GetBinCenter(j+1);
+          tex.DrawLatex(x-0.25,y,Form("%f",cont));
+          tex.DrawLatex(x-0.25,y-0.1,Form("#pm%f",econt));
+        }
+    }
+  c1->Print("figs/map_inner_2dbins_mpv2.png");
+  c1->Print("figs/map_inner_2dbins_mpv2.pdf");
+
+  th2f_inner_mpv3->Draw("colz");
+  th2f_inner_mpv3->SetMinimum(MINIMUM);
+  th2f_inner_mpv3->SetMaximum(MAXIMUM);
+  th2f_inner_mpv3->GetXaxis()->SetNdivisions(5,true);
+  th2f_inner_mpv3->GetYaxis()->SetNdivisions(2,true);
+  texnote.DrawLatex(-1.0,-0.1,"SiPM");
+  texnote.DrawLatex(-1.0,-0.2,"approx");
+  texnote.DrawLatex(-1.0,-0.3,"location");
+  for ( int i = 0; i < 5; ++i )
+    {
+      for ( int j = 0; j < 2; ++j )
+        {
+          double cont = th2f_inner_mpv3->GetBinContent(i+1,j+1);
+          double econt = th2f_inner_mpv3->GetBinError(i+1,j+1);
+          double x = th2f_inner_mpv1->GetXaxis()->GetBinCenter(i+1);
+          double y = th2f_inner_mpv1->GetXaxis()->GetBinCenter(j+1);
+          tex.DrawLatex(x-0.25,y,Form("%f",cont));
+          tex.DrawLatex(x-0.25,y-0.1,Form("#pm%f",econt));
+        }
+    }
+  c1->Print("figs/map_inner_2dbins_mpv3.png");
+  c1->Print("figs/map_inner_2dbins_mpv3.pdf");
+
+  th2f_inner_mpv4->Draw("colz");
+  th2f_inner_mpv4->SetMinimum(MINIMUM);
+  th2f_inner_mpv4->SetMaximum(MAXIMUM);
+  th2f_inner_mpv4->GetXaxis()->SetNdivisions(5,true);
+  th2f_inner_mpv4->GetYaxis()->SetNdivisions(2,true);
+  texnote.DrawLatex(-1.0,-0.1,"SiPM");
+  texnote.DrawLatex(-1.0,-0.2,"approx");
+  texnote.DrawLatex(-1.0,-0.3,"location");
+  for ( int i = 0; i < 5; ++i )
+    {
+      for ( int j = 0; j < 2; ++j )
+        {
+          double cont = th2f_inner_mpv4->GetBinContent(i+1,j+1);
+          double econt = th2f_inner_mpv4->GetBinError(i+1,j+1);
+          double x = th2f_inner_mpv1->GetXaxis()->GetBinCenter(i+1);
+          double y = th2f_inner_mpv1->GetXaxis()->GetBinCenter(j+1);
+          tex.DrawLatex(x-0.25,y,Form("%f",cont));
+          tex.DrawLatex(x-0.25,y-0.1,Form("#pm%f",econt));
+        }
+    }
+  c1->Print("figs/map_inner_2dbins_mpv4.png");
+  c1->Print("figs/map_inner_2dbins_mpv4.pdf");
+
+  th2f_inner_mpv5->Draw("colz");
+  th2f_inner_mpv5->SetMinimum(MINIMUM);
+  th2f_inner_mpv5->SetMaximum(MAXIMUM);
+  th2f_inner_mpv5->GetXaxis()->SetNdivisions(5,true);
+  th2f_inner_mpv5->GetYaxis()->SetNdivisions(2,true);
+  texnote.DrawLatex(-1.0,-0.1,"SiPM");
+  texnote.DrawLatex(-1.0,-0.2,"approx");
+  texnote.DrawLatex(-1.0,-0.3,"location");
+  for ( int i = 0; i < 5; ++i )
+    {
+      for ( int j = 0; j < 2; ++j )
+        {
+          double cont = th2f_inner_mpv5->GetBinContent(i+1,j+1);
+          double econt = th2f_inner_mpv5->GetBinError(i+1,j+1);
+          double x = th2f_inner_mpv1->GetXaxis()->GetBinCenter(i+1);
+          double y = th2f_inner_mpv1->GetXaxis()->GetBinCenter(j+1);
+          tex.DrawLatex(x-0.25,y,Form("%f",cont));
+          tex.DrawLatex(x-0.25,y-0.1,Form("#pm%f",econt));
+        }
+    }
+  c1->Print("figs/map_inner_2dbins_mpv5.png");
+  c1->Print("figs/map_inner_2dbins_mpv5.pdf");
+
+  th2f_inner_mpv6->Draw("colz");
+  th2f_inner_mpv6->SetMinimum(MINIMUM);
+  th2f_inner_mpv6->SetMaximum(MAXIMUM);
+  th2f_inner_mpv6->GetXaxis()->SetNdivisions(5,true);
+  th2f_inner_mpv6->GetYaxis()->SetNdivisions(2,true);
+  texnote.DrawLatex(-1.0,-0.1,"SiPM");
+  texnote.DrawLatex(-1.0,-0.2,"approx");
+  texnote.DrawLatex(-1.0,-0.3,"location");
+  for ( int i = 0; i < 5; ++i )
+    {
+      for ( int j = 0; j < 2; ++j )
+        {
+          double cont = th2f_inner_mpv6->GetBinContent(i+1,j+1);
+          double econt = th2f_inner_mpv6->GetBinError(i+1,j+1);
+          double x = th2f_inner_mpv1->GetXaxis()->GetBinCenter(i+1);
+          double y = th2f_inner_mpv1->GetXaxis()->GetBinCenter(j+1);
+          tex.DrawLatex(x-0.25,y,Form("%f",cont));
+          tex.DrawLatex(x-0.25,y-0.1,Form("#pm%f",econt));
+        }
+    }
+  c1->Print("figs/map_inner_2dbins_mpv6.png");
+  c1->Print("figs/map_inner_2dbins_mpv6.pdf");
+
+  th2f_inner_mpv7->Draw("colz");
+  th2f_inner_mpv7->SetMinimum(MINIMUM);
+  th2f_inner_mpv7->SetMaximum(MAXIMUM);
+  th2f_inner_mpv7->GetXaxis()->SetNdivisions(5,true);
+  th2f_inner_mpv7->GetYaxis()->SetNdivisions(2,true);
+  texnote.DrawLatex(-1.0,-0.1,"SiPM");
+  texnote.DrawLatex(-1.0,-0.2,"approx");
+  texnote.DrawLatex(-1.0,-0.3,"location");
+  for ( int i = 0; i < 5; ++i )
+    {
+      for ( int j = 0; j < 2; ++j )
+        {
+          double cont = th2f_inner_mpv7->GetBinContent(i+1,j+1);
+          double econt = th2f_inner_mpv7->GetBinError(i+1,j+1);
+          double x = th2f_inner_mpv1->GetXaxis()->GetBinCenter(i+1);
+          double y = th2f_inner_mpv1->GetXaxis()->GetBinCenter(j+1);
+          tex.DrawLatex(x-0.25,y,Form("%f",cont));
+          tex.DrawLatex(x-0.25,y-0.1,Form("#pm%f",econt));
+        }
+    }
+  c1->Print("figs/map_inner_2dbins_mpv7.png");
+  c1->Print("figs/map_inner_2dbins_mpv7.pdf");
+
+  th2f_inner_mpv8->Draw("colz");
+  th2f_inner_mpv8->SetMinimum(MINIMUM);
+  th2f_inner_mpv8->SetMaximum(MAXIMUM);
+  th2f_inner_mpv8->GetXaxis()->SetNdivisions(5,true);
+  th2f_inner_mpv8->GetYaxis()->SetNdivisions(2,true);
+  texnote.DrawLatex(-1.0,-0.1,"SiPM");
+  texnote.DrawLatex(-1.0,-0.2,"approx");
+  texnote.DrawLatex(-1.0,-0.3,"location");
+  for ( int i = 0; i < 5; ++i )
+    {
+      for ( int j = 0; j < 2; ++j )
+        {
+          double cont = th2f_inner_mpv8->GetBinContent(i+1,j+1);
+          double econt = th2f_inner_mpv8->GetBinError(i+1,j+1);
+          double x = th2f_inner_mpv1->GetXaxis()->GetBinCenter(i+1);
+          double y = th2f_inner_mpv1->GetXaxis()->GetBinCenter(j+1);
+          tex.DrawLatex(x-0.25,y,Form("%f",cont));
+          tex.DrawLatex(x-0.25,y-0.1,Form("#pm%f",econt));
+        }
+    }
+  c1->Print("figs/map_inner_2dbins_mpv8.png");
+  c1->Print("figs/map_inner_2dbins_mpv8.pdf");
 
 }
