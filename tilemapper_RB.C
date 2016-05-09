@@ -2,9 +2,12 @@
 #include <iostream>
 
 //int dotilemapper(TString);
-int dotilemapper(TString, int, int);
+//int dotilemapper(TString, int, int);
+int dotilemapper(TString, int, int, float, float);
+
 
 ofstream fout("mpv.txt");
+
 
 void tilemapper_RB()
 {
@@ -30,36 +33,42 @@ void tilemapper_RB()
   // dotilemapper("data/beam_00002374-0000.root",1,0); // 2374 1016 209 1 0
   // dotilemapper("data/beam_00002375-0000.root",0,0); // 2375 1056 209 0 0
 
-  dotilemapper("data/beam_00002669-0000.root",1,0); // 2669  976 180  7268
-  dotilemapper("data/beam_00002670-0000.root",0,1); // 2670 1056 167  10981
-  dotilemapper("data/beam_00002671-0000.root",1,1); // 2671 1016 167  11060
-  dotilemapper("data/beam_00002672-0000.root",2,1); // 2672  976 167  11060
-  dotilemapper("data/beam_00002673-0000.root",3,1); // 2673  936 167  11139
-  dotilemapper("data/beam_00002674-0000.root",4,1); // 2674  896 167  14694
-  dotilemapper("data/beam_00002675-0000.root",1,0); // 2675  976 180  10349
-  dotilemapper("data/beam_00002676-0000.root",0,0); // 2676 1076 180  10902
-  dotilemapper("data/beam_00002677-0000.root",2,0); // 2677  690 180  7979
-  dotilemapper("data/beam_00002678-0000.root",2,0); // 2678  690 180  10823
-  dotilemapper("data/beam_00002679-0000.root",3,0); // 2679  410 180  11060
-  dotilemapper("data/beam_00002680-0000.root",4,0); // 2680  215 180  10902
-  dotilemapper("data/beam_00002681-0000.root",4,0); // 2681  896 209  10981
-  dotilemapper("data/beam_00002682-0000.root",3,0); // 2682  936 209  11534
-  dotilemapper("data/beam_00002683-0000.root",2,0); // 2683  976 209  11060
-  dotilemapper("data/beam_00002684-0000.root",1,0); // 2684 1016 209  10981
-  dotilemapper("data/beam_00002685-0000.root",0,0); // 2685 1056 209  10981
-  dotilemapper("data/beam_00002686-0000.root",0,1); // 2686 1076 100  10981
-  dotilemapper("data/beam_00002687-0000.root",1,1); // 2687  976 100  10981
-  dotilemapper("data/beam_00002688-0000.root",9,1); // 2688  770 100  11139
-  dotilemapper("data/beam_00002689-0000.root",2,1); // 2689  690 100  11613
-  dotilemapper("data/beam_00002690-0000.root",3,1); // 2690  410 100  11139
-  dotilemapper("data/beam_00002691-0000.root",4,1); // 2691  215 100  11060
+
+  // --- outer tile scan
+  dotilemapper("data/beam_00002676-0000.root",0,0, 1076, 180); // 2676 1076 180  10902
+  //dotilemapper("data/beam_00002669-0000.root",1,0,  976, 180); // 2669  976 180  7268
+  dotilemapper("data/beam_00002675-0000.root",1,0,  976, 180); // 2675  976 180  10349
+  //dotilemapper("data/beam_00002677-0000.root",2,0,  690, 180); // 2677  690 180  7979
+  dotilemapper("data/beam_00002678-0000.root",2,0,  690, 180); // 2678  690 180  10823
+  dotilemapper("data/beam_00002679-0000.root",3,0,  410, 180); // 2679  410 180  11060
+  dotilemapper("data/beam_00002680-0000.root",4,0,  215, 180); // 2680  215 180  10902
+  dotilemapper("data/beam_00002686-0000.root",0,1, 1076, 100); // 2686 1076 100  10981
+  dotilemapper("data/beam_00002687-0000.root",1,1,  976, 100); // 2687  976 100  10981
+  //dotilemapper("data/beam_00002688-0000.root",9,1,  770, 100); // 2688  770 100  11139
+  dotilemapper("data/beam_00002689-0000.root",2,1,  690, 100); // 2689  690 100  11613
+  dotilemapper("data/beam_00002690-0000.root",3,1,  410, 100); // 2690  410 100  11139
+  dotilemapper("data/beam_00002691-0000.root",4,1,  215, 100); // 2691  215 100  11060
+  // --- inner tile scan
+  dotilemapper("data/beam_00002670-0000.root",0,1, 1056, 167); // 2670 1056 167  10981
+  dotilemapper("data/beam_00002671-0000.root",1,1, 1016, 167); // 2671 1016 167  11060
+  dotilemapper("data/beam_00002672-0000.root",2,1,  976, 167); // 2672  976 167  11060
+  dotilemapper("data/beam_00002673-0000.root",3,1,  936, 167); // 2673  936 167  11139
+  dotilemapper("data/beam_00002674-0000.root",4,1,  896, 167); // 2674  896 167  14694
+  dotilemapper("data/beam_00002681-0000.root",4,0,  896, 209); // 2681  896 209  10981
+  dotilemapper("data/beam_00002682-0000.root",3,0,  936, 209); // 2682  936 209  11534
+  dotilemapper("data/beam_00002683-0000.root",2,0,  976, 209); // 2683  976 209  11060
+  dotilemapper("data/beam_00002684-0000.root",1,0, 1016, 209); // 2684 1016 209  10981
+  dotilemapper("data/beam_00002685-0000.root",0,0, 1056, 209); // 2685 1056 209  10981
 
 }
 
-int dotilemapper ( TString filename, int xbin, int ybin )
+
+
+int dotilemapper ( TString filename, int xbin, int ybin, float x, float y )
 {
 
   fout << xbin << " " << ybin << " ";
+  fout << x << " " << y << " ";
 
   gROOT->SetStyle("Modern");
   gStyle->SetOptFit(111);
@@ -144,9 +153,10 @@ int dotilemapper ( TString filename, int xbin, int ybin )
     // W->Fit("okayfun",drawstring,cutstring);
     // float mean = flandau->GetParameter(1);
     float mean = flandau->GetMaximumX();
+    float emean = flandau->GetParError(1);
     // float mean = okayfun->GetMaximumX();
-    cout << "the mean is " << mean << endl;
-    fout << mean << " ";
+    cout << "the mean is " << mean << " +- " << emean << endl;
+    fout << mean << " " << emean << " ";
   }
   fout<<endl;
 
