@@ -1,9 +1,10 @@
 TChain* GetChainFromRunList(const char*);
 
-void AnalysisWithChain();
-
 void AnalysisWithTree();
 void DoAnalysisWithTree(TString,int);
+
+
+void AnalysisWithChain();
 
 
 
@@ -18,7 +19,8 @@ void tilemapper_DSTReader()
 void AnalysisWithTree()
 {
 
-  ifstream fin("runs_groups12.txt");
+  //ifstream fin("runs_groups12.txt");
+  ifstream fin("runs_group3.txt");
   int run;
   TString filename;
   while ( fin >> run )
@@ -28,6 +30,7 @@ void AnalysisWithTree()
       filename += "-0000_DSTReader.root";
       TFile* file = TFile::Open(filename);
       DoAnalysisWithTree(file,run);
+      break;  // testing
     }
 
 }
@@ -37,7 +40,12 @@ void AnalysisWithTree()
 void DoAnalysisWithTree(TFile* file, int run)
 {
 
-  TCanvas* c1 = new TCanvas("c1","");
+  TCanvas *c1 = new TCanvas("c1","",1280,960);
+  c1->Divide(4,2);
+
+  TCanvas *c2 = new TCanvas("c2","",1280,960);
+  c2->Divide(4,2);
+
 
   TTree* tree = (TTree*)file->Get("T");
 
@@ -46,12 +54,39 @@ void DoAnalysisWithTree(TFile* file, int run)
   tree->SetAlias("Valid_HODO_HORIZONTAL","Sum$(abs(TOWER_CALIB_HODO_HORIZONTAL.energy)>30) > 0");
   tree->SetAlias("Valid_HODO_VERTICAL","Sum$(abs(TOWER_CALIB_HODO_VERTICAL.energy)>30) > 0");
 
-  tree->Draw("TOWER_CALIB_TILE_MAPPER[4].energy>>h1(100,0,400)","","");
-  c1->Print(Form("mapper_run%d_step1.png",run));
-  tree->Draw("TOWER_CALIB_TILE_MAPPER[4].energy>>h2(100,0,400)","Valid_HODO_VERTICAL && Valid_HODO_HORIZONTAL","");
-  c1->Print(Form("mapper_run%d_step2.png",run));
-  tree->Draw("TOWER_CALIB_TILE_MAPPER[4].energy>>h3(100,0,400)","Valid_HODO_VERTICAL && Valid_HODO_HORIZONTAL && abs(TOWER_CALIB_C2[3].energy)>200","");
-  c1->Print(Form("mapper_run%d_step3.png",run));
+  for ( int i = 0; i < 8; ++i )
+    {
+
+      TString drawstring = "TOWER_CALIB_TILE_MAPPER[";
+      drawstring += i*2;
+      drawstring += "].energy>>hs1_";
+      drawstring += i+1;
+      drawstring += "(100,0,400)";
+      cout << "draw string is " << drawstring << endl;
+
+      c1->cd(i+1);
+      tree->Draw(drawstring,"","");
+
+      TString drawstring = "TOWER_CALIB_TILE_MAPPER[";
+      drawstring += i*2;
+      drawstring += "].energy>>hs2_";
+      drawstring += i+1;
+      drawstring += "(100,0,400)";
+      cout << "draw string is " << drawstring << endl;
+
+      c2->cd(i+1);
+      tree->Draw(drawstring,"Valid_HODO_VERTICAL && Valid_HODO_HORIZONTAL","");
+
+      // tree->Draw("TOWER_CALIB_TILE_MAPPER[4].energy>>h3(100,0,400)","Valid_HODO_VERTICAL && Valid_HODO_HORIZONTAL && abs(TOWER_CALIB_C2[3].energy)>200","");
+      // c1->Print(Form("mapper_run%d_step3.png",run));
+
+    }
+
+  c1->Print(Form("mapper_run%d_step1.png",run)); // empty
+  c2->Print(Form("mapper_run%d_step2.png",run)); // not empty
+
+  delete c1;
+  delete c2;
 
 }
 
@@ -92,10 +127,5 @@ TChain* GetChainFromRunList(const char* listname)
   return chain;
 
 }
-
-// void storage()
-// {
-//   T->Draw("TOWER_CALIB_TILE_MAPPER[4].energy>>h1(100,0,400)","Valid_HODO_VERTICAL && Valid_HODO_HORIZONTAL && abs(TOWER_CALIB_C2[3].energy)>200","")
-// }
 
 
