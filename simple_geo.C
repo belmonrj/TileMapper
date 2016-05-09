@@ -1,14 +1,109 @@
 void john();
+void john_data();
+void john_data(int);
 void edward();
 
 
 void simple_geo()
 {
 
-  john();
-  edward();
+  //john();
+  john_data();
+  //edward();
 
 }
+
+
+void john_data()
+{
+
+  john_data(1);
+  john_data(2);
+  john_data(3);
+  john_data(4);
+  john_data(5);
+  john_data(6);
+  john_data(7);
+  john_data(8);
+
+}
+
+
+void john_data(int whichtile)
+{
+
+  if ( whichtile < 1 || whichtile > 8 )
+    {
+      cout << "Invalid tyle selection" << endl;
+      return;
+    }
+
+  //TCanvas *c1 = new TCanvas("c1","",950,360);
+  //TCanvas *c1 = new TCanvas("c1","",1900,720);
+  TCanvas *c1 = new TCanvas("c1","",1900,520);
+  c1->Range(350,-10,1300,250);
+
+  cout << 1900/float(1300-350) << " " << 520/260.0 << endl;
+
+
+
+  float xouterhcal[5] = {365,387,1236,1219,365};
+  float youterhcal[5] = {0,241,171,0,0};
+  TPolyLine *tpl_outerhcal = new TPolyLine(5,xouterhcal,youterhcal,"F");
+  tpl_outerhcal->SetLineColor(kBlack);
+  tpl_outerhcal->Draw("l");
+
+  float outerangle = atan2(387-365,241);
+  cout << "outerangle is " << outerangle*180.0/3.14159 << endl;
+
+  float xinnerhcal[5] = {365,376,590,580,365};
+  float yinnerhcal[5] = {0,127,114,0,0};
+  TPolyLine *tpl_innerhcal = new TPolyLine(5,xinnerhcal,yinnerhcal,"F");
+  tpl_innerhcal->SetLineColor(kBlack);
+  tpl_innerhcal->Draw("l");
+
+  float innerangle = atan2(376-365,127);
+  cout << "innerangle is " << innerangle*180.0/3.14159 << endl;
+
+  TMarker *tm_outersipm = new TMarker(368,36,kFullCircle);
+  tm_outersipm->Draw();
+  TMarker *tm_innersipm = new TMarker(368,31,kFullCircle);
+  tm_innersipm->Draw();
+
+
+
+  ifstream fin("mpv.txt");
+
+  int temp_int;
+  float temp_float;
+  float scan1x;
+  float scan1y;
+  float mpv_array[8];
+  float empv_array[8];
+  float mpv_value;
+  TMarker *tm_scan1[20];
+  TLatex tex;
+  for ( int i = 0; i < 20; ++i )
+    {
+      fin>>temp_int>>temp_int;
+      fin>>scan1x>>scan1y;
+      for ( int j = 0; j < 8; ++j ) fin>>mpv_array[j]>>empv_array[j];
+      mpv_value = mpv_array[whichtile-1];
+      scan1x = 1076 - scan1x + 365;
+      scan1y = 252 - scan1y;
+      tm_scan1[i] = new TMarker(scan1x,scan1y,kFullCircle);
+      tm_scan1[i]->SetMarkerColor(kBlue);
+      tm_scan1[i]->Draw();
+      tex.DrawLatex(scan1x,scan1y,Form("%.1f",mpv_value));
+    }
+
+  c1->Print(Form("figs/data_survey_tile%d.png",whichtile));
+  c1->Print(Form("figs/data_survey_tile%d.pdf",whichtile));
+
+  delete c1;
+
+}
+
 
 
 void john()
