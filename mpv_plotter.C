@@ -6,6 +6,8 @@ void mpv_plotter()
 
   int xbin[20];
   int ybin[20];
+  float x[20];
+  float y[20];
   float mpv1[20];
   float mpv2[20];
   float mpv3[20];
@@ -14,6 +16,14 @@ void mpv_plotter()
   float mpv6[20];
   float mpv7[20];
   float mpv8[20];
+  float empv1[20];
+  float empv2[20];
+  float empv3[20];
+  float empv4[20];
+  float empv5[20];
+  float empv6[20];
+  float empv7[20];
+  float empv8[20];
   float pos[20];
 
   TH2F *th2f_inner_mpv1 = new TH2F("th2f_inner_mpv1","",5,-0.5,4.5,2,-0.5,1.5);
@@ -36,8 +46,24 @@ void mpv_plotter()
 
   for ( int i = 0; i < 20; ++i)
     {
-      //mpv >> mpv1[i] >> mpv2[i] >> mpv3[i] >> mpv4[i] >> mpv5[i] >> mpv6[i] >> mpv7[i] >> mpv8[i];
-      mpv >> xbin[i] >> ybin[i] >> mpv1[i] >> mpv2[i] >> mpv3[i] >> mpv4[i] >> mpv5[i] >> mpv6[i] >> mpv7[i] >> mpv8[i];
+      mpv >> xbin[i] >> ybin[i] >> x[i] >> y[i]
+          >>  mpv1[i]
+          >> empv1[i]
+          >>  mpv2[i]
+          >> empv2[i]
+          >>  mpv3[i]
+          >> empv3[i]
+          >>  mpv4[i]
+          >> empv4[i]
+          >>  mpv5[i]
+          >> empv5[i]
+          >>  mpv6[i]
+          >> empv6[i]
+          >>  mpv7[i]
+          >> empv7[i]
+          >>  mpv8[i]
+          >> empv8[i];
+
       pos[i]=i+1;
 
       if ( mpv1[i] < 0 ) mpv1[i] = 0; //Fit was failing and giving negative MPVs, so I just set to zero
@@ -48,6 +74,15 @@ void mpv_plotter()
       if ( mpv6[i] < 0 ) mpv6[i] = 0;
       if ( mpv7[i] < 0 ) mpv7[i] = 0;
       if ( mpv8[i] < 0 ) mpv8[i] = 0;
+
+      if ( empv1[i] > 50 ) mpv1[i] = 0; //Fit was failing and giving negative MPVs, so I just set to zero
+      if ( empv2[i] > 50 ) mpv2[i] = 0;
+      if ( empv3[i] > 50 ) mpv3[i] = 0;
+      if ( empv4[i] > 50 ) mpv4[i] = 0;
+      if ( empv5[i] > 50 ) mpv5[i] = 0;
+      if ( empv6[i] > 50 ) mpv6[i] = 0;
+      if ( empv7[i] > 50 ) mpv7[i] = 0;
+      if ( empv8[i] > 50 ) mpv8[i] = 0;
 
       if ( i < 10 )
         {
@@ -91,6 +126,129 @@ void mpv_plotter()
         }
     }
 
+  const float outersipmx = 1073;
+  const float outersipmy = 216;
+  const float innersipmx = 1073;
+  const float innersipmy = 221;
+
+  float innerdistance[20];
+  float outerdistance[20];
+
+  for ( int i = 0; i < 20; ++i )
+    {
+      float outer_deltax = x[i] - outersipmx;
+      float outer_deltay = y[i] - outersipmy;
+      float inner_deltax = x[i] - innersipmx;
+      float inner_deltay = y[i] - innersipmy;
+      cout << i << " ";
+      cout << x[i] << " ";
+      cout << y[i] << " ";
+      cout << outer_deltax << " ";
+      cout << outer_deltay << " ";
+      outerdistance[i] = sqrt ( outer_deltax * outer_deltax + outer_deltay * outer_deltay );
+      innerdistance[i] = sqrt ( inner_deltax * inner_deltax + inner_deltay * inner_deltay );
+      cout << outerdistance[i] << endl;
+    }
+  double MINIMUM = 1.0;
+  double MAXIMUM = 260.0;
+
+
+  TGraphErrors *TG1_outer = new TGraphErrors(20,outerdistance,mpv1,0,empv1);
+  TGraphErrors *TG2_outer = new TGraphErrors(20,outerdistance,mpv2,0,empv2);
+  TGraphErrors *TG3_outer = new TGraphErrors(20,outerdistance,mpv3,0,empv3);
+  TGraphErrors *TG4_outer = new TGraphErrors(20,outerdistance,mpv4,0,empv4);
+  TGraphErrors *TG5_outer = new TGraphErrors(20,outerdistance,mpv5,0,empv5);
+  TGraphErrors *TG6_outer = new TGraphErrors(20,outerdistance,mpv6,0,empv6);
+  TGraphErrors *TG7_outer = new TGraphErrors(20,outerdistance,mpv7,0,empv7);
+  TGraphErrors *TG8_outer = new TGraphErrors(20,outerdistance,mpv8,0,empv8);
+
+  TGraphErrors *TG1_inner = new TGraphErrors(20,innerdistance,mpv1,0,empv1);
+  TGraphErrors *TG2_inner = new TGraphErrors(20,innerdistance,mpv2,0,empv2);
+  TGraphErrors *TG3_inner = new TGraphErrors(20,innerdistance,mpv3,0,empv3);
+  TGraphErrors *TG4_inner = new TGraphErrors(20,innerdistance,mpv4,0,empv4);
+  TGraphErrors *TG5_inner = new TGraphErrors(20,innerdistance,mpv5,0,empv5);
+  TGraphErrors *TG6_inner = new TGraphErrors(20,innerdistance,mpv6,0,empv6);
+  TGraphErrors *TG7_inner = new TGraphErrors(20,innerdistance,mpv7,0,empv7);
+  TGraphErrors *TG8_inner = new TGraphErrors(20,innerdistance,mpv8,0,empv8);
+
+
+
+
+  // ---
+
+  TCanvas *c1 = new TCanvas("c1","",1200,800);
+  c1->Divide(2,2);
+
+  TG1_outer->SetMarkerStyle(kFullCircle);
+  TG1_outer->SetMarkerColor(kRed);
+  TG2_outer->SetMarkerStyle(kFullCircle);
+  TG2_outer->SetMarkerColor(kBlue);
+  TG3_outer->SetMarkerStyle(kFullSquare);
+  TG3_outer->SetMarkerColor(kRed);
+  TG4_outer->SetMarkerStyle(kFullSquare);
+  TG4_outer->SetMarkerColor(kBlue);
+
+  TG1_outer->SetMinimum(MINIMUM);
+  TG2_outer->SetMinimum(MINIMUM);
+  TG3_outer->SetMinimum(MINIMUM);
+  TG4_outer->SetMinimum(MINIMUM);
+  TG1_outer->SetMaximum(MAXIMUM);
+  TG2_outer->SetMaximum(MAXIMUM);
+  TG3_outer->SetMaximum(MAXIMUM);
+  TG4_outer->SetMaximum(MAXIMUM);
+
+  c1->cd(1);
+  TG1_outer->Draw("ap");
+  c1->cd(2);
+  TG2_outer->Draw("ap");
+  c1->cd(3);
+  TG3_outer->Draw("ap");
+  c1->cd(4);
+  TG4_outer->Draw("ap");
+
+  c1->Print("figs/MPV_DistancePlots_1_4.png");
+  c1->Print("figs/MPV_DistancePlots_1_4.pdf");
+
+
+  TG5_inner->SetMinimum(MINIMUM);
+  TG6_inner->SetMinimum(MINIMUM);
+  TG7_inner->SetMinimum(MINIMUM);
+  TG8_inner->SetMinimum(MINIMUM);
+  TG5_inner->SetMaximum(MAXIMUM);
+  TG6_inner->SetMaximum(MAXIMUM);
+  TG7_inner->SetMaximum(MAXIMUM);
+  TG8_inner->SetMaximum(MAXIMUM);
+
+  TG5_inner->SetMarkerStyle(kFullCircle);
+  TG5_inner->SetMarkerColor(kRed);
+  TG6_inner->SetMarkerStyle(kFullCircle);
+  TG6_inner->SetMarkerColor(kBlue);
+  TG7_inner->SetMarkerStyle(kFullSquare);
+  TG7_inner->SetMarkerColor(kRed);
+  TG8_inner->SetMarkerStyle(kFullSquare);
+  TG8_inner->SetMarkerColor(kBlue);
+
+  TG5_inner->GetXaxis()->SetLimits(0,220);
+  TG6_inner->GetXaxis()->SetLimits(0,220);
+  TG7_inner->GetXaxis()->SetLimits(0,220);
+  TG8_inner->GetXaxis()->SetLimits(0,220);
+
+  c1->cd(1);
+  TG5_inner->Draw("ap");
+  c1->cd(2);
+  TG6_inner->Draw("ap");
+  c1->cd(3);
+  TG7_inner->Draw("ap");
+  c1->cd(4);
+  TG8_inner->Draw("ap");
+
+  c1->Print("figs/MPV_DistancePlots_5_8.png");
+  c1->Print("figs/MPV_DistancePlots_5_8.pdf");
+
+
+  return;  // just stop here for now to test the distance plots
+
+
   TGraph *TG1 = new TGraph(20,pos,mpv1);
   TGraph *TG2 = new TGraph(20,pos,mpv2);
   TGraph *TG3 = new TGraph(20,pos,mpv3);
@@ -100,11 +258,6 @@ void mpv_plotter()
   TGraph *TG7 = new TGraph(20,pos,mpv7);
   TGraph *TG8 = new TGraph(20,pos,mpv8);
 
-  // ---
-
-  TCanvas *c1 = new TCanvas("c1","",1200,800);
-  c1->Divide(2,2);
-
   TG1->SetMarkerStyle(kFullCircle);
   TG1->SetMarkerColor(kRed);
   TG2->SetMarkerStyle(kFullCircle);
@@ -113,9 +266,6 @@ void mpv_plotter()
   TG3->SetMarkerColor(kRed);
   TG4->SetMarkerStyle(kFullSquare);
   TG4->SetMarkerColor(kBlue);
-
-  double MINIMUM = 1.0;
-  double MAXIMUM = 260.0;
 
   TG1->GetXaxis()->SetLimits(-0.5,20.5);
   TG2->GetXaxis()->SetLimits(-0.5,20.5);
