@@ -38,6 +38,8 @@ void john_data(int whichtile)
       return;
     }
 
+  bool innertile = whichtile > 4;
+
   //TCanvas *c1 = new TCanvas("c1","",950,360);
   //TCanvas *c1 = new TCanvas("c1","",1900,720);
   TCanvas *c1 = new TCanvas("c1","",1900,520);
@@ -51,6 +53,7 @@ void john_data(int whichtile)
   float youterhcal[5] = {0,241,171,0,0};
   TPolyLine *tpl_outerhcal = new TPolyLine(5,xouterhcal,youterhcal,"F");
   tpl_outerhcal->SetLineColor(kBlack);
+  if ( innertile ) tpl_outerhcal->SetLineColor(kGray);
   tpl_outerhcal->Draw("l");
 
   float outerangle = atan2(387-365,241);
@@ -59,17 +62,23 @@ void john_data(int whichtile)
   float xinnerhcal[5] = {365,376,590,580,365};
   float yinnerhcal[5] = {0,127,114,0,0};
   TPolyLine *tpl_innerhcal = new TPolyLine(5,xinnerhcal,yinnerhcal,"F");
-  tpl_innerhcal->SetLineColor(kBlack);
+  tpl_innerhcal->SetLineColor(kGray);
+  if ( innertile ) tpl_innerhcal->SetLineColor(kBlack);
   tpl_innerhcal->Draw("l");
+  if ( !innertile ) tpl_outerhcal->Draw("l");
 
   float innerangle = atan2(376-365,127);
   cout << "innerangle is " << innerangle*180.0/3.14159 << endl;
 
   TMarker *tm_outersipm = new TMarker(368,36,kFullCircle);
+  tm_outersipm->SetMarkerColor(kBlack);
+  if ( innertile ) tm_outersipm->SetMarkerColor(kGray);
   tm_outersipm->Draw();
   TMarker *tm_innersipm = new TMarker(368,31,kFullCircle);
+  tm_innersipm->SetMarkerColor(kGray);
+  if ( innertile ) tm_innersipm->SetMarkerColor(kBlack);
   tm_innersipm->Draw();
-
+  if ( !innertile ) tm_outersipm->Draw();
 
 
   ifstream fin("mpv.txt");
@@ -94,6 +103,7 @@ void john_data(int whichtile)
       tm_scan1[i] = new TMarker(scan1x,scan1y,kFullCircle);
       tm_scan1[i]->SetMarkerColor(kBlue);
       tm_scan1[i]->Draw();
+      tex.SetTextSize(0.06);
       tex.DrawLatex(scan1x,scan1y,Form("%.1f",mpv_value));
     }
 
