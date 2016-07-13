@@ -197,6 +197,24 @@ void mpv_plotter()
   TG3_outer->SetMaximum(MAXIMUM);
   TG4_outer->SetMaximum(MAXIMUM);
 
+  TG1_outer->GetXaxis()->SetTitle("Distance to SiPM (mm)");
+  TG2_outer->GetXaxis()->SetTitle("Distance to SiPM (mm)");
+  TG3_outer->GetXaxis()->SetTitle("Distance to SiPM (mm)");
+  TG4_outer->GetXaxis()->SetTitle("Distance to SiPM (mm)");
+  TG1_outer->GetYaxis()->SetTitle("ADC");
+  TG2_outer->GetYaxis()->SetTitle("ADC");
+  TG3_outer->GetYaxis()->SetTitle("ADC");
+  TG4_outer->GetYaxis()->SetTitle("ADC");
+
+  TG1_outer->SetMarkerColor(kBlack);
+  TG2_outer->SetMarkerColor(kBlack);
+  TG3_outer->SetMarkerColor(kBlack);
+  TG4_outer->SetMarkerColor(kBlack);
+  TG1_outer->SetMarkerStyle(kOpenCircle);
+  TG2_outer->SetMarkerStyle(kOpenSquare);
+  TG3_outer->SetMarkerStyle(kOpenTriangleUp);
+  TG4_outer->SetMarkerStyle(kOpenTriangleDown);
+
   c1->cd(1);
   TG1_outer->Draw("ap");
   c1->cd(2);
@@ -219,6 +237,15 @@ void mpv_plotter()
   TG7_inner->SetMaximum(MAXIMUM);
   TG8_inner->SetMaximum(MAXIMUM);
 
+  TG5_inner->GetXaxis()->SetTitle("Distance to SiPM (mm)");
+  TG6_inner->GetXaxis()->SetTitle("Distance to SiPM (mm)");
+  TG7_inner->GetXaxis()->SetTitle("Distance to SiPM (mm)");
+  TG8_inner->GetXaxis()->SetTitle("Distance to SiPM (mm)");
+  TG5_inner->GetYaxis()->SetTitle("ADC");
+  TG6_inner->GetYaxis()->SetTitle("ADC");
+  TG7_inner->GetYaxis()->SetTitle("ADC");
+  TG8_inner->GetYaxis()->SetTitle("ADC");
+
   TG5_inner->SetMarkerStyle(kFullCircle);
   TG5_inner->SetMarkerColor(kRed);
   TG6_inner->SetMarkerStyle(kFullCircle);
@@ -233,6 +260,15 @@ void mpv_plotter()
   TG7_inner->GetXaxis()->SetLimits(0,220);
   TG8_inner->GetXaxis()->SetLimits(0,220);
 
+  TG5_inner->SetMarkerColor(kBlack);
+  TG6_inner->SetMarkerColor(kBlack);
+  TG7_inner->SetMarkerColor(kBlack);
+  TG8_inner->SetMarkerColor(kBlack);
+  TG5_inner->SetMarkerStyle(kOpenCircle);
+  TG6_inner->SetMarkerStyle(kOpenSquare);
+  TG7_inner->SetMarkerStyle(kOpenTriangleUp);
+  TG8_inner->SetMarkerStyle(kOpenTriangleDown);
+
   c1->cd(1);
   TG5_inner->Draw("ap");
   c1->cd(2);
@@ -246,8 +282,43 @@ void mpv_plotter()
   c1->Print("figs/MPV_DistancePlots_5_8.pdf");
 
 
-  return;  // just stop here for now to test the distance plots
+  //return;  // just stop here for now to test the distance plots
 
+  TCanvas* c2 = new TCanvas("c2","");
+  c2->cd();
+  TG5_inner->SetMarkerColor(kBlack);
+  TG6_inner->SetMarkerColor(kBlack);
+  TG7_inner->SetMarkerColor(kBlack);
+  TG8_inner->SetMarkerColor(kBlack);
+  TG5_inner->SetMarkerStyle(kOpenCircle);
+  TG6_inner->SetMarkerStyle(kOpenSquare);
+  TG7_inner->SetMarkerStyle(kOpenTriangleUp);
+  TG8_inner->SetMarkerStyle(kOpenTriangleDown);
+  TG5_inner->Draw("ap");
+  TG6_inner->Draw("p");
+  TG7_inner->Draw("p");
+  TG8_inner->Draw("p");
+  c2->Print("figs/MPV_DistancePlots_s58.png");
+  c2->Print("figs/MPV_DistancePlots_s58.pdf");
+
+  TG1_outer->SetMarkerColor(kBlack);
+  TG2_outer->SetMarkerColor(kBlack);
+  TG3_outer->SetMarkerColor(kBlack);
+  TG4_outer->SetMarkerColor(kBlack);
+  TG1_outer->SetMarkerStyle(kOpenCircle);
+  TG2_outer->SetMarkerStyle(kOpenSquare);
+  TG3_outer->SetMarkerStyle(kOpenTriangleUp);
+  TG4_outer->SetMarkerStyle(kOpenTriangleDown);
+  TG1_outer->Draw("ap");
+  TG2_outer->Draw("p");
+  TG3_outer->Draw("p");
+  TG4_outer->Draw("p");
+  c2->Print("figs/MPV_DistancePlots_s14.png");
+  c2->Print("figs/MPV_DistancePlots_s14.pdf");
+
+  c1->cd();
+
+  return; // just stop here for now...
 
   TGraph *TG1 = new TGraph(20,pos,mpv1);
   TGraph *TG2 = new TGraph(20,pos,mpv2);
@@ -276,11 +347,19 @@ void mpv_plotter()
   TG2->SetMinimum(MINIMUM);
   TG3->SetMinimum(MINIMUM);
   TG4->SetMinimum(MINIMUM);
-
   TG1->SetMaximum(MAXIMUM);
   TG2->SetMaximum(MAXIMUM);
   TG3->SetMaximum(MAXIMUM);
   TG4->SetMaximum(MAXIMUM);
+
+  TG1->GetXaxis()->SetTitle("Scan Number");
+  TG2->GetXaxis()->SetTitle("Scan Number");
+  TG3->GetXaxis()->SetTitle("Scan Number");
+  TG4->GetXaxis()->SetTitle("Scan Number");
+  TG1->GetYaxis()->SetTitle("ADC");
+  TG2->GetYaxis()->SetTitle("ADC");
+  TG3->GetYaxis()->SetTitle("ADC");
+  TG4->GetYaxis()->SetTitle("ADC");
 
   c1->cd(1);
   TG1->Draw("ap");
@@ -309,6 +388,15 @@ void mpv_plotter()
   TG7->SetMaximum(MAXIMUM);
   TG8->SetMaximum(MAXIMUM);
 
+  TG5->GetXaxis()->SetTitle("Scan Number");
+  TG6->GetXaxis()->SetTitle("Scan Number");
+  TG7->GetXaxis()->SetTitle("Scan Number");
+  TG8->GetXaxis()->SetTitle("Scan Number");
+  TG5->GetYaxis()->SetTitle("ADC");
+  TG6->GetYaxis()->SetTitle("ADC");
+  TG7->GetYaxis()->SetTitle("ADC");
+  TG8->GetYaxis()->SetTitle("ADC");
+
   TG5->SetMarkerStyle(kFullCircle);
   TG5->SetMarkerColor(kRed);
   TG6->SetMarkerStyle(kFullCircle);
@@ -331,6 +419,8 @@ void mpv_plotter()
   c1->Print("figs/MPV_Plots_5_8.pdf");
 
   // ---
+
+  return;
 
   c1->Clear();
   delete c1;
