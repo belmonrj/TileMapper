@@ -298,6 +298,13 @@ void mpv_plotter()
   TG6_inner->Draw("p");
   TG7_inner->Draw("p");
   TG8_inner->Draw("p");
+  TLegend* leg = new TLegend(0.68,0.68,0.88,0.88);
+  leg->AddEntry(TG5_inner,"Tile 5","p");
+  leg->AddEntry(TG6_inner,"Tile 6","p");
+  leg->AddEntry(TG7_inner,"Tile 7","p");
+  leg->AddEntry(TG8_inner,"Tile 8","p");
+  leg->SetTextSize(0.045);
+  leg->Draw();
   c2->Print("figs/MPV_DistancePlots_s58.png");
   c2->Print("figs/MPV_DistancePlots_s58.pdf");
 
@@ -313,6 +320,14 @@ void mpv_plotter()
   TG2_outer->Draw("p");
   TG3_outer->Draw("p");
   TG4_outer->Draw("p");
+  delete leg;
+  leg = new TLegend(0.68,0.68,0.88,0.88);
+  leg->AddEntry(TG1_outer,"Tile 1","p");
+  leg->AddEntry(TG2_outer,"Tile 2","p");
+  leg->AddEntry(TG3_outer,"Tile 3","p");
+  leg->AddEntry(TG4_outer,"Tile 4","p");
+  leg->SetTextSize(0.045);
+  leg->Draw();
   c2->Print("figs/MPV_DistancePlots_s14.png");
   c2->Print("figs/MPV_DistancePlots_s14.pdf");
 
