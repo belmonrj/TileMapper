@@ -46,6 +46,12 @@ void DoAnalysisWithTree(TFile* file, int run)
   TCanvas *c2 = new TCanvas("c2","",1280,960);
   c2->Divide(4,2);
 
+  TCanvas *c3 = new TCanvas("c3","",1280,960);
+  c3->Divide(4,2);
+
+  TCanvas *c4 = new TCanvas("c4","",1280,960);
+  c4->Divide(4,2);
+
 
   TTree* tree = (TTree*)file->Get("T");
 
@@ -57,36 +63,57 @@ void DoAnalysisWithTree(TFile* file, int run)
   for ( int i = 0; i < 8; ++i )
     {
 
-      TString drawstring = "TOWER_CALIB_TILE_MAPPER[";
-      drawstring += i*2;
-      drawstring += "].energy>>hs1_";
-      drawstring += i+1;
-      drawstring += "(100,0,400)";
-      cout << "draw string is " << drawstring << endl;
+      TString drawstring1 = "TOWER_CALIB_TILE_MAPPER[";
+      drawstring1 += i*2;
+      drawstring1 += "].energy>>hs1_";
+      drawstring1 += i+1;
+      drawstring1 += "(100,0,400)";
+      cout << "draw string is " << drawstring1 << endl;
 
       c1->cd(i+1);
-      tree->Draw(drawstring,"","");
+      tree->Draw(drawstring1,"","");
 
-      TString drawstring = "TOWER_CALIB_TILE_MAPPER[";
-      drawstring += i*2;
-      drawstring += "].energy>>hs2_";
-      drawstring += i+1;
-      drawstring += "(100,0,400)";
-      cout << "draw string is " << drawstring << endl;
+      TString drawstring2 = "TOWER_CALIB_TILE_MAPPER[";
+      drawstring2 += i*2;
+      drawstring2 += "].energy>>hs2_";
+      drawstring2 += i+1;
+      drawstring2 += "(100,0,400)";
+      cout << "draw string is " << drawstring2 << endl;
 
       c2->cd(i+1);
-      tree->Draw(drawstring,"Valid_HODO_VERTICAL && Valid_HODO_HORIZONTAL","");
+      tree->Draw(drawstring2,"Valid_HODO_VERTICAL && Valid_HODO_HORIZONTAL","");
 
-      // tree->Draw("TOWER_CALIB_TILE_MAPPER[4].energy>>h3(100,0,400)","Valid_HODO_VERTICAL && Valid_HODO_HORIZONTAL && abs(TOWER_CALIB_C2[3].energy)>200","");
-      // c1->Print(Form("mapper_run%d_step3.png",run));
+      TString drawstring3 = "TOWER_CALIB_TILE_MAPPER[";
+      drawstring3 += i*2;
+      drawstring3 += "].energy>>hs3_";
+      drawstring3 += i+1;
+      drawstring3 += "(100,0,400)";
+      cout << "draw string is " << drawstring3 << endl;
+
+      c3->cd(i+1);
+      tree->Draw(drawstring3,"Valid_HODO_VERTICAL && Valid_HODO_HORIZONTAL && abs(TOWER_CALIB_C2[3].energy)<200","");
+
+      TString drawstring4 = "TOWER_CALIB_TILE_MAPPER[";
+      drawstring4 += i*2;
+      drawstring4 += "].energy>>hs4_";
+      drawstring4 += i+1;
+      drawstring4 += "(100,0,400)";
+      cout << "draw string is " << drawstring4 << endl;
+
+      c4->cd(i+1);
+      tree->Draw(drawstring4,"Valid_HODO_VERTICAL && Valid_HODO_HORIZONTAL && abs(TOWER_CALIB_C2[3].energy)>200","");
 
     }
 
-  c1->Print(Form("mapper_run%d_step1.png",run)); // empty
-  c2->Print(Form("mapper_run%d_step2.png",run)); // not empty
+  c1->Print(Form("mapper_run%d_step1.png",run));
+  c2->Print(Form("mapper_run%d_step2.png",run));
+  c3->Print(Form("mapper_run%d_step3.png",run));
+  c3->Print(Form("mapper_run%d_step4.png",run));
 
   delete c1;
   delete c2;
+  delete c3;
+  delete c4;
 
 }
 
