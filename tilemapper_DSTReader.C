@@ -106,7 +106,7 @@ void DoAnalysisWithTree(TFile* file, int run)
   c1->Print(Form("FigsRunByRun/mapper_run%d_step1.png",run));
   c2->Print(Form("FigsRunByRun/mapper_run%d_step2.png",run));
   c3->Print(Form("FigsRunByRun/mapper_run%d_step3.png",run));
-  c3->Print(Form("FigsRunByRun/mapper_run%d_step4.png",run));
+  c4->Print(Form("FigsRunByRun/mapper_run%d_step4.png",run));
 
   delete c1;
   delete c2;
@@ -115,7 +115,7 @@ void DoAnalysisWithTree(TFile* file, int run)
 
   // --- let's try to have a look at the hodoscope positions
 
-  TCanvas* c5 = new TCanvas("c5","");
+  TCanvas* c5 = new TCanvas("c5","",800,800);
   TH2D* th2d_hodo_fine = new TH2D("th2d_hodo_fine","",40,-0.5,7.5,40,-0.5,7.5);
   TH2D* th2d_hodo_coarse = new TH2D("th2d_hodo_coarse","",8,-0.5,7.5,8,-0.5,7.5);
   th2d_hodo_fine->GetXaxis()->SetTitle("Horizontal Hodoscope");
@@ -128,7 +128,44 @@ void DoAnalysisWithTree(TFile* file, int run)
   c5->Print(Form("FigsRunByRun/hodoscope_coarse_run%d.png",run));
   delete c5;
 
+  // --- now lets try to look at the distributions for each hodoscope position
+
+  TCanvas* c6 = new TCanvas("c6","",1280,960);
+  c6->Divide(4,2);
+
+  for ( int indexHorizontal = 0; indexHorizontal < 8; ++indexHorizontal)
+    {
+      for ( int indexVertical = 0; indexVertical < 8; ++indexVertical )
+        {
+          for ( int indexTile = 0; indexTile < 8; ++indexTile )
+            {
+              TString drawstring = "TOWER_CALIB_TILE_MAPPER[";
+              drawstring += indexTile*2;
+              drawstring += "].energy>>hs_";
+              drawstring += indexTile+1;
+              drawstring += "(100,0,400)";
+              cout << "drawstring is " << drawstring << endl;
+
+              TString cutstring = "Valid_HODO_VERTICAL && Valid_HODO_HORIZONTAL";
+              cutstring += " && abs(Average_HODO_HORIZONTAL-";
+              cutstring += indexHorizontal;
+              cutstring += ")<0.5";
+              cutstring += " && abs(Average_HODO_VERTICAL-";
+              cutstring += indexVertical;
+              cutstring += ")<0.5";
+              cout << "cutstring is " << cutstring << endl;
+
+              c6->cd(indexTile+1);
+              tree->Fit("flandau",drawstring,cutstring,"","");
+            }
+          c6->Print(Form("FigsRunByRun/HodoscopeGridFigs/mapper_run%d_H%dV%d.png",run,indexHorizontal,indexVertical));
+        }
+    }
+
+  delete c6;
+
 }
+
 
 
 void AnalysisWithChain()
