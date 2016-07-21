@@ -62,6 +62,8 @@ void DoAnalysisWithTree(TFile* file, int run)
   tree->SetAlias("Valid_HODO_HORIZONTAL","Sum$(abs(TOWER_CALIB_HODO_HORIZONTAL.energy)>30) > 0");
   tree->SetAlias("Valid_HODO_VERTICAL","Sum$(abs(TOWER_CALIB_HODO_VERTICAL.energy)>30) > 0");
 
+  ofstream fout((const char*)Form("DataRunByRun/mapper_run%d.dat",run));
+
   for ( int i = 0; i < 8; ++i )
     {
 
@@ -82,6 +84,7 @@ void DoAnalysisWithTree(TFile* file, int run)
 
       c2->cd(i+1);
       tree->Fit("flandau",drawstring2,"Valid_HODO_VERTICAL && Valid_HODO_HORIZONTAL","","");
+      fout << run << " " << 9999 << " " << 9999 << " " << flandau->GetParameter(1) << " " << flandau->GetParError(1) << endl;
 
       TString drawstring3 = "TOWER_CALIB_TILE_MAPPER[";
       drawstring3 += i*2;
@@ -107,6 +110,10 @@ void DoAnalysisWithTree(TFile* file, int run)
   c2->Print(Form("FigsRunByRun/mapper_run%d_step2.png",run));
   c3->Print(Form("FigsRunByRun/mapper_run%d_step3.png",run));
   c4->Print(Form("FigsRunByRun/mapper_run%d_step4.png",run));
+  c1->Print(Form("FigsRunByRun/mapper_run%d_step1.pdf",run));
+  c2->Print(Form("FigsRunByRun/mapper_run%d_step2.pdf",run));
+  c3->Print(Form("FigsRunByRun/mapper_run%d_step3.pdf",run));
+  c4->Print(Form("FigsRunByRun/mapper_run%d_step4.pdf",run));
 
   delete c1;
   delete c2;
@@ -124,8 +131,10 @@ void DoAnalysisWithTree(TFile* file, int run)
   th2d_hodo_coarse->GetYaxis()->SetTitle("Vertical Hodoscope");
   tree->Draw("Average_HODO_HORIZONTAL:Average_HODO_VERTICAL>>th2d_hodo_fine","Valid_HODO_VERTICAL && Valid_HODO_HORIZONTAL","colz");
   c5->Print(Form("FigsRunByRun/hodoscope_fine_run%d.png",run));
+  c5->Print(Form("FigsRunByRun/hodoscope_fine_run%d.pdf",run));
   tree->Draw("Average_HODO_HORIZONTAL:Average_HODO_VERTICAL>>th2d_hodo_coarse","Valid_HODO_VERTICAL && Valid_HODO_HORIZONTAL","colz");
   c5->Print(Form("FigsRunByRun/hodoscope_coarse_run%d.png",run));
+  c5->Print(Form("FigsRunByRun/hodoscope_coarse_run%d.pdf",run));
   delete c5;
 
   // --- now lets try to look at the distributions for each hodoscope position
@@ -157,10 +166,13 @@ void DoAnalysisWithTree(TFile* file, int run)
 
               c6->cd(indexTile+1);
               tree->Fit("flandau",drawstring,cutstring,"","");
+              fout << run << " " << indexHorizontal << " " << indexVertical << " " << flandau->GetParameter(1) << " " << flandau->GetParError(1) << endl;
             }
           c6->Print(Form("FigsRunByRun/HodoscopeGridFigs/mapper_run%d_H%dV%d.png",run,indexHorizontal,indexVertical));
+          c6->Print(Form("FigsRunByRun/HodoscopeGridFigs/mapper_run%d_H%dV%d.pdf",run,indexHorizontal,indexVertical));
         }
     }
+  fout.close();
 
   delete c6;
 
