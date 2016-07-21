@@ -40,6 +40,8 @@ void AnalysisWithTree()
 void DoAnalysisWithTree(TFile* file, int run)
 {
 
+  TF1* flandau = new TF1("flandau","landau",0,400);
+
   TCanvas *c1 = new TCanvas("c1","",1280,960);
   c1->Divide(4,2);
 
@@ -68,52 +70,63 @@ void DoAnalysisWithTree(TFile* file, int run)
       drawstring1 += "].energy>>hs1_";
       drawstring1 += i+1;
       drawstring1 += "(100,0,400)";
-      cout << "draw string is " << drawstring1 << endl;
 
       c1->cd(i+1);
-      tree->Draw(drawstring1,"","");
+      tree->Fit("flandau",drawstring1,"","","");
 
       TString drawstring2 = "TOWER_CALIB_TILE_MAPPER[";
       drawstring2 += i*2;
       drawstring2 += "].energy>>hs2_";
       drawstring2 += i+1;
       drawstring2 += "(100,0,400)";
-      cout << "draw string is " << drawstring2 << endl;
 
       c2->cd(i+1);
-      tree->Draw(drawstring2,"Valid_HODO_VERTICAL && Valid_HODO_HORIZONTAL","");
+      tree->Fit("flandau",drawstring2,"Valid_HODO_VERTICAL && Valid_HODO_HORIZONTAL","","");
 
       TString drawstring3 = "TOWER_CALIB_TILE_MAPPER[";
       drawstring3 += i*2;
       drawstring3 += "].energy>>hs3_";
       drawstring3 += i+1;
       drawstring3 += "(100,0,400)";
-      cout << "draw string is " << drawstring3 << endl;
 
       c3->cd(i+1);
-      tree->Draw(drawstring3,"Valid_HODO_VERTICAL && Valid_HODO_HORIZONTAL && abs(TOWER_CALIB_C2[3].energy)<200","");
+      tree->Fit("flandau",drawstring3,"Valid_HODO_VERTICAL && Valid_HODO_HORIZONTAL && abs(TOWER_CALIB_C2[3].energy)<200","","");
 
       TString drawstring4 = "TOWER_CALIB_TILE_MAPPER[";
       drawstring4 += i*2;
       drawstring4 += "].energy>>hs4_";
       drawstring4 += i+1;
       drawstring4 += "(100,0,400)";
-      cout << "draw string is " << drawstring4 << endl;
 
       c4->cd(i+1);
-      tree->Draw(drawstring4,"Valid_HODO_VERTICAL && Valid_HODO_HORIZONTAL && abs(TOWER_CALIB_C2[3].energy)>200","");
+      tree->Fit("flandau",drawstring4,"Valid_HODO_VERTICAL && Valid_HODO_HORIZONTAL && abs(TOWER_CALIB_C2[3].energy)>200","","");
 
     }
 
-  c1->Print(Form("mapper_run%d_step1.png",run));
-  c2->Print(Form("mapper_run%d_step2.png",run));
-  c3->Print(Form("mapper_run%d_step3.png",run));
-  c3->Print(Form("mapper_run%d_step4.png",run));
+  c1->Print(Form("FigsRunByRun/mapper_run%d_step1.png",run));
+  c2->Print(Form("FigsRunByRun/mapper_run%d_step2.png",run));
+  c3->Print(Form("FigsRunByRun/mapper_run%d_step3.png",run));
+  c3->Print(Form("FigsRunByRun/mapper_run%d_step4.png",run));
 
   delete c1;
   delete c2;
   delete c3;
   delete c4;
+
+  // --- let's try to have a look at the hodoscope positions
+
+  TCanvas* c5 = new TCanvas("c5","");
+  TH2D* th2d_hodo_fine = new TH2D("th2d_hodo_fine","",40,-0.5,7.5,40,-0.5,7.5);
+  TH2D* th2d_hodo_coarse = new TH2D("th2d_hodo_coarse","",8,-0.5,7.5,8,-0.5,7.5);
+  th2d_hodo_fine->GetXaxis()->SetTitle("Horizontal Hodoscope");
+  th2d_hodo_fine->GetYaxis()->SetTitle("Vertical Hodoscope");
+  th2d_hodo_coarse->GetXaxis()->SetTitle("Horizontal Hodoscope");
+  th2d_hodo_coarse->GetYaxis()->SetTitle("Vertical Hodoscope");
+  tree->Draw("Average_HODO_HORIZONTAL:Average_HODO_VERTICAL>>th2d_hodo_fine","Valid_HODO_VERTICAL && Valid_HODO_HORIZONTAL","colz");
+  c5->Print(Form("FigsRunByRun/hodoscope_fine_run%d.png",run));
+  tree->Draw("Average_HODO_HORIZONTAL:Average_HODO_VERTICAL>>th2d_hodo_coarse","Valid_HODO_VERTICAL && Valid_HODO_HORIZONTAL","colz");
+  c5->Print(Form("FigsRunByRun/hodoscope_coarse_run%d.png",run));
+  delete c5;
 
 }
 
