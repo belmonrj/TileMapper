@@ -4,6 +4,7 @@ void john_data(int);
 void edward();
 
 void rotate(float&, float&, const float&);
+void rotatereflect(float&, float&, const float&);
 //void rotate(double&, double&, double&);
 
 void simple_geo()
@@ -22,6 +23,14 @@ void rotate(float& x, float& y, const float& theta)
   float yprime = x*sin(theta) + y*cos(theta);
   x = xprime;
   y = yprime;
+}
+
+void rotatereflect(float& x, float& y, const float& theta)
+{
+  float xprime = x*cos(theta) - y*sin(theta);
+  float yprime = x*sin(theta) + y*cos(theta);
+  x = xprime;
+  y = -yprime;
 }
 
 
@@ -55,7 +64,8 @@ void john_data(int whichtile)
   //TCanvas *c1 = new TCanvas("c1","",1900,720);
   TCanvas *c1 = new TCanvas("c1","",1900,520);
   //c1->Range(350,-10,1300,250);
-  c1->Range(300,-10,1300,300);
+  //c1->Range(300,-10,1300,300);
+  c1->Range(300,-300,1300,10);
 
   cout << 1900/float(1300-350) << " " << 520/260.0 << endl;
 
@@ -74,11 +84,11 @@ void john_data(int whichtile)
   float outerangle = atan2(xouterhcal_1-xouterhcal_0,youterhcal_1-youterhcal_0);
   cout << "outerangle is " << outerangle*180.0/3.14159 << endl;
 
-  rotate(xouterhcal_0,youterhcal_0,outerangle);
-  rotate(xouterhcal_1,youterhcal_1,outerangle);
-  rotate(xouterhcal_2,youterhcal_2,outerangle);
-  rotate(xouterhcal_3,youterhcal_3,outerangle);
-  rotate(xouterhcal_4,youterhcal_4,outerangle);
+  rotatereflect(xouterhcal_0,youterhcal_0,outerangle);
+  rotatereflect(xouterhcal_1,youterhcal_1,outerangle);
+  rotatereflect(xouterhcal_2,youterhcal_2,outerangle);
+  rotatereflect(xouterhcal_3,youterhcal_3,outerangle);
+  rotatereflect(xouterhcal_4,youterhcal_4,outerangle);
 
   float xouterhcal[5] = {xouterhcal_0,
                          xouterhcal_1,
@@ -114,11 +124,11 @@ void john_data(int whichtile)
   float innerangle = atan2(xinnerhcal_1-xinnerhcal_0,yinnerhcal_1-yinnerhcal_0);
   cout << "innerangle is " << innerangle*180.0/3.14159 << endl;
 
-  rotate(xinnerhcal_0,yinnerhcal_0,innerangle);
-  rotate(xinnerhcal_1,yinnerhcal_1,innerangle);
-  rotate(xinnerhcal_2,yinnerhcal_2,innerangle);
-  rotate(xinnerhcal_3,yinnerhcal_3,innerangle);
-  rotate(xinnerhcal_4,yinnerhcal_4,innerangle);
+  rotatereflect(xinnerhcal_0,yinnerhcal_0,innerangle);
+  rotatereflect(xinnerhcal_1,yinnerhcal_1,innerangle);
+  rotatereflect(xinnerhcal_2,yinnerhcal_2,innerangle);
+  rotatereflect(xinnerhcal_3,yinnerhcal_3,innerangle);
+  rotatereflect(xinnerhcal_4,yinnerhcal_4,innerangle);
 
   float xinnerhcal[5] = {xinnerhcal_0,
                          xinnerhcal_1,
@@ -138,14 +148,14 @@ void john_data(int whichtile)
 
   float outersipm_x = 368;
   float outersipm_y = 36;
-  rotate(outersipm_x,outersipm_y,outerangle);
+  rotatereflect(outersipm_x,outersipm_y,outerangle);
   TMarker *tm_outersipm = new TMarker(outersipm_x,outersipm_y,kFullCircle);
   tm_outersipm->SetMarkerColor(kBlack);
   if ( innertile ) tm_outersipm->SetMarkerColor(kGray);
   tm_outersipm->Draw();
   float outersipm_x = 368;
   float outersipm_y = 31;
-  rotate(outersipm_x,outersipm_y,outerangle);
+  rotatereflect(outersipm_x,outersipm_y,outerangle);
   TMarker *tm_innersipm = new TMarker(outersipm_x,outersipm_y,kFullCircle);
   tm_innersipm->SetMarkerColor(kGray);
   if ( innertile ) tm_innersipm->SetMarkerColor(kBlack);
@@ -171,8 +181,8 @@ void john_data(int whichtile)
       mpv_value = mpv_array[whichtile-1];
       scan1x = 1076 - scan1x + 365;
       scan1y = 252 - scan1y;
-      if ( innertile ) rotate(scan1x,scan1y,innerangle);
-      else rotate(scan1x,scan1y,outerangle);
+      if ( innertile ) rotatereflect(scan1x,scan1y,innerangle);
+      else rotatereflect(scan1x,scan1y,outerangle);
       tm_scan1[i] = new TMarker(scan1x,scan1y,kFullCircle);
       tm_scan1[i]->SetMarkerColor(kBlue);
       tm_scan1[i]->Draw();
