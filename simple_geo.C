@@ -14,6 +14,10 @@ void simple_geo()
 }
 
 
+
+
+
+
 void john_data()
 {
 
@@ -47,27 +51,65 @@ void john_data(int whichtile)
 
   cout << 1900/float(1300-350) << " " << 520/260.0 << endl;
 
+  float xouterhcal_0 = 365;
+  float xouterhcal_1 = 387;
+  float xouterhcal_2 = 1236;
+  float xouterhcal_3 = 1219;
+  float xouterhcal_4 = 365;
 
+  float youterhcal_0 = 0;
+  float youterhcal_1 = 241;
+  float youterhcal_2 = 171;
+  float youterhcal_3 = 0;
+  float youterhcal_4 = 0;
 
-  float xouterhcal[5] = {365,387,1236,1219,365};
-  float youterhcal[5] = {0,241,171,0,0};
+  float xouterhcal[5] = {xouterhcal_0,
+                         xouterhcal_1,
+                         xouterhcal_2,
+                         xouterhcal_3,
+                         xouterhcal_4};
+  float youterhcal[5] = {youterhcal_0,
+                         youterhcal_1,
+                         youterhcal_2,
+                         youterhcal_3,
+                         youterhcal_4};
   TPolyLine *tpl_outerhcal = new TPolyLine(5,xouterhcal,youterhcal,"F");
   tpl_outerhcal->SetLineColor(kBlack);
   if ( innertile ) tpl_outerhcal->SetLineColor(kGray);
   tpl_outerhcal->Draw("l");
 
-  float outerangle = atan2(387-365,241);
+  float outerangle = atan2(xouterhcal_1-xouterhcal_0,youterhcal_1-youterhcal_0);
   cout << "outerangle is " << outerangle*180.0/3.14159 << endl;
 
-  float xinnerhcal[5] = {365,376,590,580,365};
-  float yinnerhcal[5] = {0,127,114,0,0};
+  float xinnerhcal_0 = 365;
+  float xinnerhcal_1 = 376;
+  float xinnerhcal_2 = 590;
+  float xinnerhcal_3 = 580;
+  float xinnerhcal_4 = 365;
+
+  float yinnerhcal_0 = 0;
+  float yinnerhcal_1 = 127;
+  float yinnerhcal_2 = 114;
+  float yinnerhcal_3 = 0;
+  float yinnerhcal_4 = 0;
+
+  float xinnerhcal[5] = {xinnerhcal_0,
+                         xinnerhcal_1,
+                         xinnerhcal_2,
+                         xinnerhcal_3,
+                         xinnerhcal_4};
+  float yinnerhcal[5] = {yinnerhcal_0,
+                         yinnerhcal_1,
+                         yinnerhcal_2,
+                         yinnerhcal_3,
+                         yinnerhcal_4};
   TPolyLine *tpl_innerhcal = new TPolyLine(5,xinnerhcal,yinnerhcal,"F");
   tpl_innerhcal->SetLineColor(kGray);
   if ( innertile ) tpl_innerhcal->SetLineColor(kBlack);
   tpl_innerhcal->Draw("l");
   if ( !innertile ) tpl_outerhcal->Draw("l");
 
-  float innerangle = atan2(376-365,127);
+  float innerangle = atan2(xinnerhcal_1-xinnerhcal_0,yinnerhcal_1-yinnerhcal_0);
   cout << "innerangle is " << innerangle*180.0/3.14159 << endl;
 
   TMarker *tm_outersipm = new TMarker(368,36,kFullCircle);
@@ -113,7 +155,6 @@ void john_data(int whichtile)
   delete c1;
 
 }
-
 
 
 void john()
@@ -308,3 +349,4 @@ void edward()
   c1->Print("survey_diagram_Edward.png");
 
 }
+
