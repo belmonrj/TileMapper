@@ -42,6 +42,8 @@ void rotatereflectshift(float& x, float& y, const float& theta, const float& xof
   y = -yprime;
   x -= xoff;
   y -= yoff;
+  x /= 10.2;
+  y /= 10;
 }
 
 
@@ -77,23 +79,30 @@ void john_data(int whichtile)
   //c1->Range(350,-10,1300,250);
   //c1->Range(300,-10,1300,300);
   //c1->Range(300,-300,1300,10);
-  c1->Range(-50,-10,900,300);
+  //c1->Range(-50,-10,900,300);
+  c1->Range(-5,-1,90,30);
+
+  TFile* file_led = TFile::Open("DataLED/20160113-1238_VMIN_SIPM1_meanHistSub.root");
+  TH2D* th2d_led = (TH2D*)file_led->Get("meanHistSub");
+  th2d_led->Draw("col");
 
   // float xoff = 365;
   // float yoff = -300; // minus because of reflection
-  float xoff = 360;
-  float yoff = -300; // minus because of reflection
+  float xoff = 345;
+  float yoff = -280; // minus because of reflection
 
   cout << 1900/float(1300-350) << " " << 520/260.0 << endl;
 
   float xouterhcal_0 = 365;
   float xouterhcal_1 = 387;
   float xouterhcal_2 = 1236;
-  float xouterhcal_3 = 1219;
+  //float xouterhcal_3 = 1219;
+  float xouterhcal_3 = 1221;
   float xouterhcal_4 = 365;
 
   float youterhcal_0 = 0;
-  float youterhcal_1 = 241;
+  //float youterhcal_1 = 241;
+  float youterhcal_1 = 247;
   float youterhcal_2 = 171;
   float youterhcal_3 = 0;
   float youterhcal_4 = 0;
