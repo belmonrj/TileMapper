@@ -217,7 +217,12 @@ void john_data(int whichtile)
       tm_scan1[i]->SetMarkerColor(kBlue);
       tm_scan1[i]->Draw();
       tex.SetTextSize(0.06);
-      tex.DrawLatex(scan1x,scan1y,Form("%.1f",mpv_value));
+      float led_value = 0;
+      int xbin = th2d_led->GetXaxis()->FindBin(scan1x);
+      int ybin = th2d_led->GetXaxis()->FindBin(scan1y);
+      led_value = th2d_led->GetBinContent(xbin,ybin);
+      float showme = mpv_value/led_value/2.0;
+      tex.DrawLatex(scan1x,scan1y,Form("%.2f",showme));
     }
 
   c1->Print(Form("figs/data_survey_tile%d.png",whichtile));
