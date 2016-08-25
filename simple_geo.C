@@ -88,7 +88,8 @@ void john_data(int whichtile)
 
   // float xoff = 365;
   // float yoff = -300; // minus because of reflection
-  float xoff = 345;
+  float xoff = 343;
+  // float xoff = 345;
   float yoff = -280; // minus because of reflection
 
   cout << 1900/float(1300-350) << " " << 520/260.0 << endl;
@@ -146,7 +147,8 @@ void john_data(int whichtile)
   float xinnerhcal_4 = 365;
 
   float yinnerhcal_0 = 0;
-  float yinnerhcal_1 = 127;
+  //float yinnerhcal_1 = 127;
+  float yinnerhcal_1 = 131;
   float yinnerhcal_2 = 114;
   float yinnerhcal_3 = 0;
   float yinnerhcal_4 = 0;
