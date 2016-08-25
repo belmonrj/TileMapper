@@ -3,6 +3,8 @@ void john_data();
 void john_data(int);
 void edward();
 
+void rotate(float&, float&, const float&);
+//void rotate(double&, double&, double&);
 
 void simple_geo()
 {
@@ -14,8 +16,13 @@ void simple_geo()
 }
 
 
-
-
+void rotate(float& x, float& y, const float& theta)
+{
+  float xprime = x*cos(theta) - y*sin(theta);
+  float yprime = x*sin(theta) + y*cos(theta);
+  x = xprime;
+  y = yprime;
+}
 
 
 void john_data()
@@ -47,7 +54,8 @@ void john_data(int whichtile)
   //TCanvas *c1 = new TCanvas("c1","",950,360);
   //TCanvas *c1 = new TCanvas("c1","",1900,720);
   TCanvas *c1 = new TCanvas("c1","",1900,520);
-  c1->Range(350,-10,1300,250);
+  //c1->Range(350,-10,1300,250);
+  c1->Range(300,-10,1300,300);
 
   cout << 1900/float(1300-350) << " " << 520/260.0 << endl;
 
@@ -63,6 +71,15 @@ void john_data(int whichtile)
   float youterhcal_3 = 0;
   float youterhcal_4 = 0;
 
+  float outerangle = atan2(xouterhcal_1-xouterhcal_0,youterhcal_1-youterhcal_0);
+  cout << "outerangle is " << outerangle*180.0/3.14159 << endl;
+
+  rotate(xouterhcal_0,youterhcal_0,outerangle);
+  rotate(xouterhcal_1,youterhcal_1,outerangle);
+  rotate(xouterhcal_2,youterhcal_2,outerangle);
+  rotate(xouterhcal_3,youterhcal_3,outerangle);
+  rotate(xouterhcal_4,youterhcal_4,outerangle);
+
   float xouterhcal[5] = {xouterhcal_0,
                          xouterhcal_1,
                          xouterhcal_2,
@@ -73,13 +90,14 @@ void john_data(int whichtile)
                          youterhcal_2,
                          youterhcal_3,
                          youterhcal_4};
+
+
   TPolyLine *tpl_outerhcal = new TPolyLine(5,xouterhcal,youterhcal,"F");
   tpl_outerhcal->SetLineColor(kBlack);
+
   if ( innertile ) tpl_outerhcal->SetLineColor(kGray);
   tpl_outerhcal->Draw("l");
 
-  float outerangle = atan2(xouterhcal_1-xouterhcal_0,youterhcal_1-youterhcal_0);
-  cout << "outerangle is " << outerangle*180.0/3.14159 << endl;
 
   float xinnerhcal_0 = 365;
   float xinnerhcal_1 = 376;
@@ -92,6 +110,15 @@ void john_data(int whichtile)
   float yinnerhcal_2 = 114;
   float yinnerhcal_3 = 0;
   float yinnerhcal_4 = 0;
+
+  float innerangle = atan2(xinnerhcal_1-xinnerhcal_0,yinnerhcal_1-yinnerhcal_0);
+  cout << "innerangle is " << innerangle*180.0/3.14159 << endl;
+
+  rotate(xinnerhcal_0,yinnerhcal_0,innerangle);
+  rotate(xinnerhcal_1,yinnerhcal_1,innerangle);
+  rotate(xinnerhcal_2,yinnerhcal_2,innerangle);
+  rotate(xinnerhcal_3,yinnerhcal_3,innerangle);
+  rotate(xinnerhcal_4,yinnerhcal_4,innerangle);
 
   float xinnerhcal[5] = {xinnerhcal_0,
                          xinnerhcal_1,
@@ -109,19 +136,21 @@ void john_data(int whichtile)
   tpl_innerhcal->Draw("l");
   if ( !innertile ) tpl_outerhcal->Draw("l");
 
-  float innerangle = atan2(xinnerhcal_1-xinnerhcal_0,yinnerhcal_1-yinnerhcal_0);
-  cout << "innerangle is " << innerangle*180.0/3.14159 << endl;
-
-  TMarker *tm_outersipm = new TMarker(368,36,kFullCircle);
+  float outersipm_x = 368;
+  float outersipm_y = 36;
+  rotate(outersipm_x,outersipm_y,outerangle);
+  TMarker *tm_outersipm = new TMarker(outersipm_x,outersipm_y,kFullCircle);
   tm_outersipm->SetMarkerColor(kBlack);
   if ( innertile ) tm_outersipm->SetMarkerColor(kGray);
   tm_outersipm->Draw();
-  TMarker *tm_innersipm = new TMarker(368,31,kFullCircle);
+  float outersipm_x = 368;
+  float outersipm_y = 31;
+  rotate(outersipm_x,outersipm_y,outerangle);
+  TMarker *tm_innersipm = new TMarker(outersipm_x,outersipm_y,kFullCircle);
   tm_innersipm->SetMarkerColor(kGray);
   if ( innertile ) tm_innersipm->SetMarkerColor(kBlack);
   tm_innersipm->Draw();
   if ( !innertile ) tm_outersipm->Draw();
-
 
   ifstream fin("mpv.txt");
 
@@ -142,6 +171,8 @@ void john_data(int whichtile)
       mpv_value = mpv_array[whichtile-1];
       scan1x = 1076 - scan1x + 365;
       scan1y = 252 - scan1y;
+      if ( innertile ) rotate(scan1x,scan1y,innerangle);
+      else rotate(scan1x,scan1y,outerangle);
       tm_scan1[i] = new TMarker(scan1x,scan1y,kFullCircle);
       tm_scan1[i]->SetMarkerColor(kBlue);
       tm_scan1[i]->Draw();
