@@ -3,38 +3,20 @@ void john_data();
 void john_data(int);
 void edward();
 
-void rotate(float&, float&, const float&);
-void rotatereflect(float&, float&, const float&);
-void rotatereflectshift(float&, float&, const float&, const float&, const float&);
+void rotatereflectshift(float&, float&, const float&, const float&, const float&, const float& const float&);
 //void rotate(double&, double&, double&);
 
 void simple_geo()
 {
 
-  //john();
+  john();
   john_data();
   //edward();
 
 }
 
 
-void rotate(float& x, float& y, const float& theta)
-{
-  float xprime = x*cos(theta) - y*sin(theta);
-  float yprime = x*sin(theta) + y*cos(theta);
-  x = xprime;
-  y = yprime;
-}
-
-void rotatereflect(float& x, float& y, const float& theta)
-{
-  float xprime = x*cos(theta) - y*sin(theta);
-  float yprime = x*sin(theta) + y*cos(theta);
-  x = xprime;
-  y = -yprime;
-}
-
-void rotatereflectshift(float& x, float& y, const float& theta, const float& xoff, const float& yoff)
+void rotatereflectshift(float& x, float& y, const float& theta, const float& xoff, const float& yoff, const float& xscale, const float& yscale)
 {
   float xprime = x*cos(theta) - y*sin(theta);
   float yprime = x*sin(theta) + y*cos(theta);
@@ -42,8 +24,8 @@ void rotatereflectshift(float& x, float& y, const float& theta, const float& xof
   y = -yprime;
   x -= xoff;
   y -= yoff;
-  x /= 10.2;
-  y /= 10;
+  x /= xscale;
+  y /= yscale;
 }
 
 
@@ -65,6 +47,8 @@ void john_data()
 void john_data(int whichtile)
 {
 
+  bool flag = false;
+
   if ( whichtile < 1 || whichtile > 8 )
     {
       cout << "Invalid tyle selection" << endl;
@@ -73,24 +57,31 @@ void john_data(int whichtile)
 
   bool innertile = whichtile > 4;
 
-  //TCanvas *c1 = new TCanvas("c1","",950,360);
-  //TCanvas *c1 = new TCanvas("c1","",1900,720);
   TCanvas *c1 = new TCanvas("c1","",1900,520);
-  //c1->Range(350,-10,1300,250);
-  //c1->Range(300,-10,1300,300);
-  //c1->Range(300,-300,1300,10);
-  //c1->Range(-50,-10,900,300);
   c1->Range(-5,-1,90,30);
+  if ( innertile )
+    {
+      if ( c1 ) delete c1;
+      c1 = new TCanvas("c1","",800,520);
+      c1->Range(-5,-1,50,30);
+    }
 
   TFile* file_led = TFile::Open("DataLED/20160113-1238_VMIN_SIPM1_meanHistSub.root");
+  if ( innertile ) file_led = TFile::Open("DataLED/20160106-1320_VMIN_SIPM1_meanHistSub.root");
   TH2D* th2d_led = (TH2D*)file_led->Get("meanHistSub");
   th2d_led->Draw("col");
 
-  // float xoff = 365;
-  // float yoff = -300; // minus because of reflection
   float xoff = 343;
-  // float xoff = 345;
   float yoff = -280; // minus because of reflection
+  float xscale = 10.2;
+  float yscale = 10.0;
+  if ( innertile )
+    {
+      xoff = 345;
+      yoff = -172;
+      xscale = 10.5;
+      yscale = 10.0;
+    }
 
   cout << 1900/float(1300-350) << " " << 520/260.0 << endl;
 
@@ -111,11 +102,11 @@ void john_data(int whichtile)
   float outerangle = atan2(xouterhcal_1-xouterhcal_0,youterhcal_1-youterhcal_0);
   cout << "outerangle is " << outerangle*180.0/3.14159 << endl;
 
-  rotatereflectshift(xouterhcal_0,youterhcal_0,outerangle,xoff,yoff);
-  rotatereflectshift(xouterhcal_1,youterhcal_1,outerangle,xoff,yoff);
-  rotatereflectshift(xouterhcal_2,youterhcal_2,outerangle,xoff,yoff);
-  rotatereflectshift(xouterhcal_3,youterhcal_3,outerangle,xoff,yoff);
-  rotatereflectshift(xouterhcal_4,youterhcal_4,outerangle,xoff,yoff);
+  rotatereflectshift(xouterhcal_0,youterhcal_0,outerangle,xoff,yoff,xscale,yscale);
+  rotatereflectshift(xouterhcal_1,youterhcal_1,outerangle,xoff,yoff,xscale,yscale);
+  rotatereflectshift(xouterhcal_2,youterhcal_2,outerangle,xoff,yoff,xscale,yscale);
+  rotatereflectshift(xouterhcal_3,youterhcal_3,outerangle,xoff,yoff,xscale,yscale);
+  rotatereflectshift(xouterhcal_4,youterhcal_4,outerangle,xoff,yoff,xscale,yscale);
 
   float xouterhcal[5] = {xouterhcal_0,
                          xouterhcal_1,
@@ -133,11 +124,6 @@ void john_data(int whichtile)
   cout << xouterhcal_1 << endl;
   cout << youterhcal_1 << endl;
 
-  TPolyLine *tpl_outerhcal = new TPolyLine(5,xouterhcal,youterhcal,"F");
-  tpl_outerhcal->SetLineColor(kBlack);
-
-  if ( innertile ) tpl_outerhcal->SetLineColor(kGray);
-  tpl_outerhcal->Draw("l");
 
 
   float xinnerhcal_0 = 365;
@@ -156,11 +142,11 @@ void john_data(int whichtile)
   float innerangle = atan2(xinnerhcal_1-xinnerhcal_0,yinnerhcal_1-yinnerhcal_0);
   cout << "innerangle is " << innerangle*180.0/3.14159 << endl;
 
-  rotatereflectshift(xinnerhcal_0,yinnerhcal_0,innerangle,xoff,yoff);
-  rotatereflectshift(xinnerhcal_1,yinnerhcal_1,innerangle,xoff,yoff);
-  rotatereflectshift(xinnerhcal_2,yinnerhcal_2,innerangle,xoff,yoff);
-  rotatereflectshift(xinnerhcal_3,yinnerhcal_3,innerangle,xoff,yoff);
-  rotatereflectshift(xinnerhcal_4,yinnerhcal_4,innerangle,xoff,yoff);
+  rotatereflectshift(xinnerhcal_0,yinnerhcal_0,innerangle,xoff,yoff,xscale,yscale);
+  rotatereflectshift(xinnerhcal_1,yinnerhcal_1,innerangle,xoff,yoff,xscale,yscale);
+  rotatereflectshift(xinnerhcal_2,yinnerhcal_2,innerangle,xoff,yoff,xscale,yscale);
+  rotatereflectshift(xinnerhcal_3,yinnerhcal_3,innerangle,xoff,yoff,xscale,yscale);
+  rotatereflectshift(xinnerhcal_4,yinnerhcal_4,innerangle,xoff,yoff,xscale,yscale);
 
   float xinnerhcal[5] = {xinnerhcal_0,
                          xinnerhcal_1,
@@ -172,6 +158,14 @@ void john_data(int whichtile)
                          yinnerhcal_2,
                          yinnerhcal_3,
                          yinnerhcal_4};
+
+  if ( flag )
+  {
+  TPolyLine *tpl_outerhcal = new TPolyLine(5,xouterhcal,youterhcal,"F");
+  tpl_outerhcal->SetLineColor(kBlack);
+  if ( innertile ) tpl_outerhcal->SetLineColor(kGray);
+  tpl_outerhcal->Draw("l");
+
   TPolyLine *tpl_innerhcal = new TPolyLine(5,xinnerhcal,yinnerhcal,"F");
   tpl_innerhcal->SetLineColor(kGray);
   if ( innertile ) tpl_innerhcal->SetLineColor(kBlack);
@@ -180,19 +174,20 @@ void john_data(int whichtile)
 
   float outersipm_x = 368;
   float outersipm_y = 36;
-  rotatereflectshift(outersipm_x,outersipm_y,outerangle,xoff,yoff);
+  rotatereflectshift(outersipm_x,outersipm_y,outerangle,xoff,yoff,xscale,yscale);
   TMarker *tm_outersipm = new TMarker(outersipm_x,outersipm_y,kFullCircle);
   tm_outersipm->SetMarkerColor(kBlack);
   if ( innertile ) tm_outersipm->SetMarkerColor(kGray);
   tm_outersipm->Draw();
   float outersipm_x = 368;
   float outersipm_y = 31;
-  rotatereflectshift(outersipm_x,outersipm_y,outerangle,xoff,yoff);
+  rotatereflectshift(outersipm_x,outersipm_y,outerangle,xoff,yoff,xscale,yscale);
   TMarker *tm_innersipm = new TMarker(outersipm_x,outersipm_y,kFullCircle);
   tm_innersipm->SetMarkerColor(kGray);
   if ( innertile ) tm_innersipm->SetMarkerColor(kBlack);
   tm_innersipm->Draw();
   if ( !innertile ) tm_outersipm->Draw();
+  }
 
   ifstream fin("mpv.txt");
 
@@ -213,18 +208,22 @@ void john_data(int whichtile)
       mpv_value = mpv_array[whichtile-1];
       scan1x = 1076 - scan1x + 365;
       scan1y = 252 - scan1y;
-      if ( innertile ) rotatereflectshift(scan1x,scan1y,innerangle,xoff,yoff);
-      else rotatereflectshift(scan1x,scan1y,outerangle,xoff,yoff);
-      tm_scan1[i] = new TMarker(scan1x,scan1y,kFullCircle);
-      tm_scan1[i]->SetMarkerColor(kBlue);
-      tm_scan1[i]->Draw();
+      if ( innertile ) rotatereflectshift(scan1x,scan1y,innerangle,xoff,yoff,xscale,yscale);
+      else rotatereflectshift(scan1x,scan1y,outerangle,xoff,yoff,xscale,yscale);
       tex.SetTextSize(0.06);
       float led_value = 0;
       int xbin = th2d_led->GetXaxis()->FindBin(scan1x);
       int ybin = th2d_led->GetXaxis()->FindBin(scan1y);
       led_value = th2d_led->GetBinContent(xbin,ybin);
       float showme = mpv_value/led_value/2.0;
-      tex.DrawLatex(scan1x,scan1y,Form("%.2f",showme));
+      if ( innertile ) showme *= 2.0;
+      if ( ( !innertile && i != 0 && i != 5 ) || ( innertile && i > 9 ) )
+        {
+          tm_scan1[i] = new TMarker(scan1x,scan1y,kFullCircle);
+          tm_scan1[i]->SetMarkerColor(kBlack);
+          tm_scan1[i]->Draw();
+          tex.DrawLatex(scan1x,scan1y,Form("%.2f",showme));
+        }
     }
 
   c1->Print(Form("figs/data_survey_tile%d.png",whichtile));
