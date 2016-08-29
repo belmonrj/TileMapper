@@ -122,6 +122,15 @@ void mpv_plotter()
   mpv3[5] = 0;
   mpv4[5] = 0;
 
+  mpv5[0] = 0;
+  mpv6[0] = 0;
+  mpv7[0] = 0;
+  mpv8[0] = 0;
+  mpv5[5] = 0;
+  mpv6[5] = 0;
+  mpv7[5] = 0;
+  mpv8[5] = 0;
+
   for ( int i = 0; i < 5; ++i )
     {
       for ( int j = 0; j < 2; ++j )
