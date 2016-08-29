@@ -4,7 +4,7 @@ void john_data_rrs();
 void john_data_rrs(int);
 
 
-void rotatereflectshift(float&, float&, const float&, const float&, const float&, const float& const float&);
+void rotatereflectshift(float&, float&, float, float, float, float float);
 
 
 void simple_geo_data()
@@ -16,7 +16,7 @@ void simple_geo_data()
 }
 
 
-void rotatereflectshift(float& x, float& y, const float& theta, const float& xoff, const float& yoff, const float& xscale, const float& yscale)
+void rotatereflectshift(float& x, float& y, float theta, float xoff, float yoff, float xscale, float yscale)
 {
   float xprime = x*cos(theta) - y*sin(theta);
   float yprime = x*sin(theta) + y*cos(theta);
