@@ -70,17 +70,30 @@ void john_data_rrs(int whichtile)
   if ( innertile ) file_led = TFile::Open("DataLED/20160106-1320_VMIN_SIPM1_meanHistSub.root");
   TH2D* th2d_led = (TH2D*)file_led->Get("meanHistSub");
   th2d_led->Draw("col");
+  if ( innertile )
+    {
+      th2d_led->GetYaxis()->SetLimits(0,140);
+      th2d_led->GetXaxis()->SetLimits(0,240);
+    }
+  else
+    {
+      th2d_led->GetYaxis()->SetLimits(0,250);
+      th2d_led->GetXaxis()->SetLimits(0,870);
+    }
+  th2d_led->GetYaxis()->SetTitle("Y position (mm)");
+  th2d_led->GetXaxis()->SetTitle("X position (mm)");
+  if ( !innertile ) th2d_led->GetYaxis()->SetTitleOffset(0.5);
 
   float xoff = 343;
   float yoff = -280; // minus because of reflection
-  float xscale = 10.2;
-  float yscale = 10.0;
+  float xscale = 1.02;
+  float yscale = 1.0;
   if ( innertile )
     {
       xoff = 345;
       yoff = -172;
-      xscale = 10.5;
-      yscale = 10.0;
+      xscale = 1.05;
+      yscale = 1.0;
     }
 
   cout << 1900/float(1300-350) << " " << 520/260.0 << endl;
