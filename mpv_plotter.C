@@ -107,9 +107,20 @@ void mpv_plotter()
           th2f_inner_mpv8->SetBinContent(xbin[i]+1,ybin[i]+1,mpv8[i]);
         }
 
+
+
       cout << "xbin is " << xbin[i] << " and ybin is " << ybin[i] << " and mpv1 is " << mpv1[i] << endl;
 
     }
+
+  mpv1[0] = 0;
+  mpv2[0] = 0;
+  mpv3[0] = 0;
+  mpv4[0] = 0;
+  mpv1[5] = 0;
+  mpv2[5] = 0;
+  mpv3[5] = 0;
+  mpv4[5] = 0;
 
   for ( int i = 0; i < 5; ++i )
     {
