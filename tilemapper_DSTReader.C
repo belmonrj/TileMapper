@@ -1,11 +1,13 @@
 TChain* GetChainFromRunList(const char*);
 
+
 void AnalysisWithTree();
-void DoAnalysisWithTree(TString,int);
+
+
+void DoAnalysisWithTree(TString,int,int,int);
 
 
 void AnalysisWithChain();
-
 
 
 void tilemapper_DSTReader()
@@ -16,29 +18,34 @@ void tilemapper_DSTReader()
 }
 
 
+ofstream gout("mpv_mod.txt");
+
 void AnalysisWithTree()
 {
 
-  //ifstream fin("runs_groups12.txt");
-  ifstream fin("runs_group3.txt");
+  ifstream fin("table_group3.txt");
   int run;
+  int x, y;
   TString filename;
-  while ( fin >> run )
+  while ( fin >> run >> x >> y )
     {
       filename = "JinData/beam_0000";
       filename += run;
       filename += "-0000_DSTReader.root";
       TFile* file = TFile::Open(filename);
-      DoAnalysisWithTree(file,run);
-      break;  // testing
+      DoAnalysisWithTree(file,run,x,y);
+      //break;  // testing
     }
+
+  gout.close();
 
 }
 
 
-
-void DoAnalysisWithTree(TFile* file, int run)
+void DoAnalysisWithTree(TFile* file, int run, int x, int y)
 {
+
+  gout << 0 << " " << run << " " << x << " " << y << " ";
 
   TF1* flandau = new TF1("flandau","landau",0,400);
 
@@ -53,7 +60,6 @@ void DoAnalysisWithTree(TFile* file, int run)
 
   TCanvas *c4 = new TCanvas("c4","",1280,960);
   c4->Divide(4,2);
-
 
   TTree* tree = (TTree*)file->Get("T");
 
@@ -85,6 +91,7 @@ void DoAnalysisWithTree(TFile* file, int run)
       c2->cd(i+1);
       tree->Fit("flandau",drawstring2,"Valid_HODO_VERTICAL && Valid_HODO_HORIZONTAL","","");
       fout << run << " " << 9999 << " " << 9999 << " " << flandau->GetParameter(1) << " " << flandau->GetParError(1) << endl;
+      gout << flandau->GetParameter(1) << " " << flandau->GetParError(1) << " ";
 
       TString drawstring3 = "TOWER_CALIB_TILE_MAPPER[";
       drawstring3 += i*2;
@@ -119,6 +126,10 @@ void DoAnalysisWithTree(TFile* file, int run)
   delete c2;
   delete c3;
   delete c4;
+
+  gout << endl;
+
+  return;
 
   // --- let's try to have a look at the hodoscope positions
 
