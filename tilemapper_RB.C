@@ -160,6 +160,8 @@ int dotilemapper ( TString filename, int xbin, int ybin, float x, float y )
       cutstring += i*2;
       cutstring += "].energy>6.0";
 
+      cutstring += " && Valid_HODO_VERTICAL && Valid_HODO_HORIZONTAL";
+
       cout << i+1 << " Draw(" << drawstring << "," << cutstring << ")" << endl;
 
       c1->cd(ican++);
