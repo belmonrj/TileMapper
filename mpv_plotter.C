@@ -332,6 +332,14 @@ void mpv_plotter()
   TG2_outer->SetMarkerColor(kBlack);
   TG3_outer->SetMarkerColor(kBlack);
   TG4_outer->SetMarkerColor(kBlack);
+  TG1_outer->SetMarkerColor(kBlack);
+  TG2_outer->SetMarkerColor(kRed);
+  TG3_outer->SetMarkerColor(kBlue);
+  TG4_outer->SetMarkerColor(kGreen+2);
+  TG1_outer->SetMarkerColor(kMagenta+2);
+  TG2_outer->SetMarkerColor(kRed);
+  TG3_outer->SetMarkerColor(kBlue);
+  TG4_outer->SetMarkerColor(kGreen+2);
   TG1_outer->SetMarkerStyle(kOpenCircle);
   TG2_outer->SetMarkerStyle(kOpenSquare);
   TG3_outer->SetMarkerStyle(kOpenTriangleUp);
