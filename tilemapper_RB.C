@@ -12,28 +12,28 @@ ofstream fout("mpv.txt");
 void tilemapper_RB()
 {
 
-  dotilemapper("JinData/beam_00002353-0000.root",1,0,976,180 ); // 2353 976 180  1 0
-  dotilemapper("JinData/beam_00002354-0000.root",0,0,1076,180); // 2354 1076 180 0 0
-  dotilemapper("JinData/beam_00002355-0000.root",2,0,690,180 ); // 2355 690 180  2 0
-  dotilemapper("JinData/beam_00002356-0000.root",3,0,410,180 ); // 2356 410 180  3 0
-  dotilemapper("JinData/beam_00002357-0000.root",4,0,215,180 ); // 2357 215 180  4 0
-  dotilemapper("JinData/beam_00002358-0000.root",4,1,215,100 ); // 2358 215 100  4 1
-  dotilemapper("JinData/beam_00002359-0000.root",3,1,410,100 ); // 2359 410 100  3 1
-  dotilemapper("JinData/beam_00002361-0000.root",2,1,690,100 ); // 2361 690 100  2 1
-  dotilemapper("JinData/beam_00002362-0000.root",1,1,976,100 ); // 2362 976 100  1 1
-  dotilemapper("JinData/beam_00002363-0000.root",0,1,1076,100); // 2363 1076 100 0 1
-  dotilemapper("JinData/beam_00002364-0000.root",0,1,1056,167); // 2364 1056 167 0 1
-  dotilemapper("JinData/beam_00002366-0000.root",1,1,1016,167); // 2366 1016 167 1 1
-  dotilemapper("JinData/beam_00002367-0000.root",2,1,976,167 ); // 2367 976 167  2 1
-  dotilemapper("JinData/beam_00002368-0000.root",3,1,936,167 ); // 2368 936 167  3 1
-  dotilemapper("JinData/beam_00002369-0000.root",4,1,896,167 ); // 2369 896 167  4 1
-  dotilemapper("JinData/beam_00002370-0000.root",4,0,896,209 ); // 2370 896 209  4 0
-  dotilemapper("JinData/beam_00002371-0000.root",3,0,936,209 ); // 2371 936 209  3 0
-  dotilemapper("JinData/beam_00002373-0000.root",2,0,976,209 ); // 2373 976 209  2 0
-  dotilemapper("JinData/beam_00002374-0000.root",1,0,1016,209); // 2374 1016 209 1 0
-  dotilemapper("JinData/beam_00002375-0000.root",0,0,1056,209); // 2375 1056 209 0 0
+  // dotilemapper("JinData/beam_00002353-0000.root",1,0,976,180 ); // 2353 976 180  1 0
+  // dotilemapper("JinData/beam_00002354-0000.root",0,0,1076,180); // 2354 1076 180 0 0
+  // dotilemapper("JinData/beam_00002355-0000.root",2,0,690,180 ); // 2355 690 180  2 0
+  // dotilemapper("JinData/beam_00002356-0000.root",3,0,410,180 ); // 2356 410 180  3 0
+  // dotilemapper("JinData/beam_00002357-0000.root",4,0,215,180 ); // 2357 215 180  4 0
+  // dotilemapper("JinData/beam_00002358-0000.root",4,1,215,100 ); // 2358 215 100  4 1
+  // dotilemapper("JinData/beam_00002359-0000.root",3,1,410,100 ); // 2359 410 100  3 1
+  // dotilemapper("JinData/beam_00002361-0000.root",2,1,690,100 ); // 2361 690 100  2 1
+  // dotilemapper("JinData/beam_00002362-0000.root",1,1,976,100 ); // 2362 976 100  1 1
+  // dotilemapper("JinData/beam_00002363-0000.root",0,1,1076,100); // 2363 1076 100 0 1
+  // dotilemapper("JinData/beam_00002364-0000.root",0,1,1056,167); // 2364 1056 167 0 1
+  // dotilemapper("JinData/beam_00002366-0000.root",1,1,1016,167); // 2366 1016 167 1 1
+  // dotilemapper("JinData/beam_00002367-0000.root",2,1,976,167 ); // 2367 976 167  2 1
+  // dotilemapper("JinData/beam_00002368-0000.root",3,1,936,167 ); // 2368 936 167  3 1
+  // dotilemapper("JinData/beam_00002369-0000.root",4,1,896,167 ); // 2369 896 167  4 1
+  // dotilemapper("JinData/beam_00002370-0000.root",4,0,896,209 ); // 2370 896 209  4 0
+  // dotilemapper("JinData/beam_00002371-0000.root",3,0,936,209 ); // 2371 936 209  3 0
+  // dotilemapper("JinData/beam_00002373-0000.root",2,0,976,209 ); // 2373 976 209  2 0
+  // dotilemapper("JinData/beam_00002374-0000.root",1,0,1016,209); // 2374 1016 209 1 0
+  // dotilemapper("JinData/beam_00002375-0000.root",0,0,1056,209); // 2375 1056 209 0 0
 
-  return;
+  // return;
 
   // --- outer tile scan
   dotilemapper("JinData/beam_00002676-0000_DSTReader.root",0,0, 1076, 180); // 2676 1076 180  10902
