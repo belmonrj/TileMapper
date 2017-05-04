@@ -82,10 +82,10 @@ void john_data_rrs(int whichtile)
     }
   th2d_led->GetYaxis()->SetTitle("Y position (mm)");
   th2d_led->GetXaxis()->SetTitle("X position (mm)");
-  th2d_led->GetYaxis()->SetTitleSize(0.075);
-  th2d_led->GetXaxis()->SetTitleSize(0.075);
-  th2d_led->GetYaxis()->SetLabelSize(0.075);
-  th2d_led->GetXaxis()->SetLabelSize(0.075);
+  th2d_led->GetYaxis()->SetTitleSize(0.065);
+  th2d_led->GetXaxis()->SetTitleSize(0.065);
+  th2d_led->GetYaxis()->SetLabelSize(0.065);
+  th2d_led->GetXaxis()->SetLabelSize(0.065);
   if ( !innertile ) th2d_led->GetYaxis()->SetTitleOffset(0.5);
 
   float xoff = 343;
@@ -217,7 +217,7 @@ void john_data_rrs(int whichtile)
   float mpv_value;
   TMarker *tm_scan1[20];
   TLatex tex;
-  tex.SetTextSize(0.075);
+  tex.SetTextSize(0.065);
   for ( int i = 0; i < 20; ++i )
     {
       fin>>temp_int>>temp_int;
@@ -240,7 +240,7 @@ void john_data_rrs(int whichtile)
           tm_scan1[i] = new TMarker(scan1x,scan1y,kFullCircle);
           tm_scan1[i]->SetMarkerColor(kBlack);
           tm_scan1[i]->Draw();
-          tex.SetTextSize(0.075);
+          tex.SetTextSize(0.065);
           tex.DrawLatex(scan1x,scan1y,Form("%.2f",showme));
         }
     }
